@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "495147229825",
+    "project_id": "login-registro-app-debolsillo",
+    "storage_bucket": "login-registro-app-debolsillo.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:495147229825:android:1d230f2c086f51fd862380",
+        "android_client_info": {
+          "package_name": "com.example.debolsilloapp_pcortes"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA8-vRF-A-xWpBQLkIxbF-AXTZvyxOhrYM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
