@@ -16,5 +16,6 @@ class MainActivity : AppCompatActivity() {
         binding.btnRegistrar.setOnClickListener{
             startActivity(Intent(this@MainActivity,ActivityRegistrarse::class.java))
         }
+
     }
 }

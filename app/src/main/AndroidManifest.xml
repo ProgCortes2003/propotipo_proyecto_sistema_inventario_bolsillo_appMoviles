@@ -13,6 +13,21 @@
         android:theme="@style/Theme.DeBolsilloApp_pcortes"
         tools:targetApi="31">
         <activity
+            android:name=".ActivityParametros"
+            android:exported="false" />
+        <activity
+            android:name=".ActivityKardex"
+            android:exported="false" />
+        <activity
+            android:name=".ActivityInventario"
+            android:exported="false" />
+        <activity
+            android:name=".ActivitySalida"
+            android:exported="false" />
+        <activity
+            android:name=".ActivityEntrada"
+            android:exported="false" />
+        <activity
             android:name=".ActivityVentanaPrincipal"
             android:exported="false" />
         <activity
