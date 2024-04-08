@@ -6,4 +6,118 @@
     android:layout_height="match_parent"
     tools:context=".ActivityInventario">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0.05"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical"
+            android:layout_marginHorizontal="50dp"
+            android:gravity="center"
+            android:padding="15dp"
+            >
+
+            <ImageView
+                android:layout_width="95dp"
+                android:layout_height="95dp"
+                android:src="@drawable/svg_inventario"
+                ></ImageView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Inventario"
+                android:layout_gravity="center"
+                android:layout_marginTop="15dp"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                ></TextView>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                >
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    >
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <TableLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            >
+                            <TableRow
+                                android:background="@color/purpura">
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:textColor="@color/white"
+                                    android:text="Cantidad"
+                                    android:gravity="center"
+                                    ></TextView>
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:text="Producto"
+                                    android:textColor="@color/white"></TextView>
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:textColor="@color/white"
+                                    android:text="Costo Subtotal"
+                                    android:gravity="center"
+                                    ></TextView>
+                            </TableRow>
+                            <TableRow>
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Producto"
+                                    android:gravity="center"
+                                    ></TextView>
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Producto"
+                                    android:gravity="center"
+                                    ></TextView>
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Producto"
+                                    android:gravity="center"
+                                    ></TextView>
+                            </TableRow>
+                        </TableLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </ScrollView>
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

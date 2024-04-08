@@ -3,7 +3,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="purpura">#800080</color>
-    <color name="naranja">#FED8B1</color>
+    <color name="naranja_palido">#FED8B1</color>
     <color name="verde_palido">#B4FF9A</color>
     <color name="rojo_palido">#FE8484</color>
 </resources>
