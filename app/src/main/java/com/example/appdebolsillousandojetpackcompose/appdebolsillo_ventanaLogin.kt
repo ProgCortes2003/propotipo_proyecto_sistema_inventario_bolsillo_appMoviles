@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -18,16 +19,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 
 
-@Preview (showSystemUi = true, showBackground = true)
+
 @Composable
-fun mostrarVentanaLogin(){
+fun mostrarVentanaLogin(navController: NavController){
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -37,7 +40,7 @@ fun mostrarVentanaLogin(){
     ) {
         Image(painter = painterResource(id = R.drawable.imagen_hola_ventana_login),
             contentDescription = "An stick figure shaking the hand representing a hello",
-            modifier = Modifier.size(200.dp))
+            modifier = Modifier.size(150.dp))
 
         Spacer(modifier = Modifier.height(40.dp))
 
@@ -82,6 +85,21 @@ fun mostrarVentanaLogin(){
 
         Spacer(modifier = Modifier.height(20.dp))
 
+        Button(onClick = {
+            navController.navigate(Rutas.rutaVentanaIndex)
+        },
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color.LightGray
+            )
+            ) {
+            Text(text = "Ingresar como Invitado",
+                fontSize = 16.sp,
+                color = Color.Black)
+
+        }
+
+        Spacer(modifier = Modifier.height(20.dp))
+
         TextButton(
             onClick = {
                 /*Acción que se ejecutará al presionar el texto*/
@@ -104,8 +122,10 @@ fun mostrarVentanaLogin(){
 
         Image(painter = painterResource(id = R.drawable.imagen_logo_google_ventana_login) ,
             contentDescription = "Logo de Google",
-            modifier = Modifier.size(60.dp).clickable {
+            modifier = Modifier
+                .size(60.dp)
+                .clickable {
 
-            })
+                })
     }
 }

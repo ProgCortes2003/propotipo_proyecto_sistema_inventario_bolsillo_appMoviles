@@ -19,6 +19,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.example.appdebolsillousandojetpackcompose.ui.theme.AppDeBolsilloUsandoJetpackComposeTheme
 
 class MainActivity : ComponentActivity() {
@@ -28,7 +31,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            mostrarVentanaLogin()
+            iniciarNavegacion()
         }
     }
 
