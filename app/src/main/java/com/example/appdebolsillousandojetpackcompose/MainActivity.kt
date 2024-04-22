@@ -22,42 +22,15 @@ import androidx.compose.ui.unit.sp
 import com.example.appdebolsillousandojetpackcompose.ui.theme.AppDeBolsilloUsandoJetpackComposeTheme
 
 class MainActivity : ComponentActivity() {
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-
+            mostrarVentanaLogin()
         }
     }
 
-    @Composable
-    fun mostrarTexto(texto:String){
-        Text(text = texto)
-    }
-
-
-    @Composable
-    fun ComponenteTexto(
-        texto:String, tamanio:TextUnit, tipoDeColor:Color,
-        pesoLetra:FontWeight, estiloLetra:FontStyle, alineacionTexto:TextAlign){
-
-        Text(
-            modifier = Modifier,
-            text = texto,
-            fontSize = tamanio,
-            color = tipoDeColor,
-            fontWeight = pesoLetra,
-            fontStyle = estiloLetra,
-            textAlign = alineacionTexto
-            )
-    }
-
-    @Preview(showSystemUi = true)
-    @Composable
-    fun mostrarTextoPreviewEnInterfazDeUsuario(){
-
-        mostrarTexto(
-            texto = "Hola de nuevo"
-        )
-    }
 
 }
