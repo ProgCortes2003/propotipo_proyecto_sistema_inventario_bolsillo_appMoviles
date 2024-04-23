@@ -1,5 +1,7 @@
 package com.example.appdebolsillousandojetpackcompose
 
+import FirebaseAuthViewModel
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -16,21 +18,37 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException
+import com.google.firebase.auth.auth
 
 
 @Composable
-fun mostrarVentanaLogin(navController: NavController){
+fun mostrarVentanaLogin(navController: NavController,
+                        viewModel: FirebaseAuthViewModel = FirebaseAuthViewModel()){
+
+    val correoElectronico = remember { mutableStateOf("") }
+    val contrasenia = remember { mutableStateOf("") }
+    val mensajeExcepcionEnLogin = remember { mutableStateOf("") }
+    val auth = FirebaseAuth.getInstance()
+    val context = LocalContext.current
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -56,8 +74,9 @@ fun mostrarVentanaLogin(navController: NavController){
 
         Spacer(modifier = Modifier.height(40.dp))
 
-        OutlinedTextField(value = "",
-            onValueChange = {},
+        OutlinedTextField(
+            value = correoElectronico.value,
+            onValueChange = {correoElectronico.value = it},
             label = {
                 Text(
                     text = "Correo Electrónico"
@@ -66,18 +85,46 @@ fun mostrarVentanaLogin(navController: NavController){
 
         Spacer(modifier = Modifier.height(20.dp))
 
-        OutlinedTextField(value = "",
-            onValueChange = {},
+        OutlinedTextField(
+            value = contrasenia.value,
+            onValueChange = {contrasenia.value = it},
             label = {
                 Text(
                     text = "Contraseña"
                 )
-            })
+            },
+            visualTransformation = PasswordVisualTransformation()
+        )
 
         Spacer(modifier = Modifier.height(20.dp))
 
-        Button(onClick = {
-        /*Acción que se ejecutará al ser presionado*/
+
+        Button(
+            onClick = {
+                mensajeExcepcionEnLogin.value = ""
+                auth.signInWithEmailAndPassword(correoElectronico.value, contrasenia.value)
+                    .addOnCompleteListener {
+                        task -> if(task.isSuccessful){
+                            navController.navigate(Rutas.rutaVentanaIndex)
+                        } else {
+                            when(task.exception){
+                                is FirebaseAuthInvalidCredentialsException -> {
+                                    mensajeExcepcionEnLogin.value = "Correo electrónico o contraseña inválidos."
+                                }
+                                is FirebaseAuthUserCollisionException -> {
+                                    mensajeExcepcionEnLogin.value = "Ya existe una cuenta con este correo electrónico."
+                                }
+                                is FirebaseAuthWeakPasswordException -> {
+                                    mensajeExcepcionEnLogin.value = "La contraseña debe tener al menos 6 caracteres."
+                                }
+                                else -> {
+                                    mensajeExcepcionEnLogin.value = "0currió algo inesperado. Por favor, vuelve a ingresar tus credenciales"
+                                }
+                            }
+                        }
+                    }
+
+
         }) {
             Text(text = "Ingresar",
                 fontSize = 18.sp)
