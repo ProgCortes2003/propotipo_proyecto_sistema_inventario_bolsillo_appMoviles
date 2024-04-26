@@ -153,7 +153,7 @@ fun mostrarVentanaLogin(navController: NavController,
             }
         ) {
 
-            Text(text = "¿Olvidaste tu contraseña?")
+            Text(text = "¿No tienes una cuenta?")
 
         }
 
