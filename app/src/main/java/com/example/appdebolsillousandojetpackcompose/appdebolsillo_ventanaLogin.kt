@@ -1,6 +1,8 @@
 package com.example.appdebolsillousandojetpackcompose
 
 import FirebaseAuthViewModel
+import android.content.ContentValues.TAG
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -49,6 +51,7 @@ fun mostrarVentanaLogin(navController: NavController,
     val mensajeExcepcionEnLogin = remember { mutableStateOf("") }
     val auth = FirebaseAuth.getInstance()
     val context = LocalContext.current
+
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -105,20 +108,27 @@ fun mostrarVentanaLogin(navController: NavController,
                 auth.signInWithEmailAndPassword(correoElectronico.value, contrasenia.value)
                     .addOnCompleteListener {
                         task -> if(task.isSuccessful){
+                            Toast.makeText(context, "Autenticación Éxitosa", Toast.LENGTH_SHORT).show()
                             navController.navigate(Rutas.rutaVentanaIndex)
+                            Log.d(TAG, "Autenticación éxitosa")
+
                         } else {
                             when(task.exception){
                                 is FirebaseAuthInvalidCredentialsException -> {
                                     mensajeExcepcionEnLogin.value = "Correo electrónico o contraseña inválidos."
+                                    Toast.makeText(context,"${mensajeExcepcionEnLogin.value}", Toast.LENGTH_SHORT).show()
                                 }
                                 is FirebaseAuthUserCollisionException -> {
                                     mensajeExcepcionEnLogin.value = "Ya existe una cuenta con este correo electrónico."
+                                    Toast.makeText(context,"${mensajeExcepcionEnLogin.value}", Toast.LENGTH_SHORT).show()
                                 }
                                 is FirebaseAuthWeakPasswordException -> {
                                     mensajeExcepcionEnLogin.value = "La contraseña debe tener al menos 6 caracteres."
+                                    Toast.makeText(context,"${mensajeExcepcionEnLogin.value}", Toast.LENGTH_SHORT).show()
                                 }
                                 else -> {
                                     mensajeExcepcionEnLogin.value = "0currió algo inesperado. Por favor, vuelve a ingresar tus credenciales"
+                                    Toast.makeText(context,"${mensajeExcepcionEnLogin.value}", Toast.LENGTH_SHORT).show()
                                 }
                             }
                         }
@@ -149,7 +159,7 @@ fun mostrarVentanaLogin(navController: NavController,
 
         TextButton(
             onClick = {
-                /*Acción que se ejecutará al presionar el texto*/
+                navController.navigate(Rutas.rutaVentanaRegistro)
             }
         ) {
 

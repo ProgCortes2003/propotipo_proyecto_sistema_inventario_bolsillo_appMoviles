@@ -7,7 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 
-@Preview(showSystemUi = true)
+
 @Composable
 fun iniciarNavegacion() {
 
@@ -22,7 +22,7 @@ fun iniciarNavegacion() {
             mostrarVentanaIndex()
         }
         composable(Rutas.rutaVentanaRegistro){
-            mostrarVentanaRegistro()
+            mostrarVentanaRegistro(navController, viewModel)
         }
     })
 }

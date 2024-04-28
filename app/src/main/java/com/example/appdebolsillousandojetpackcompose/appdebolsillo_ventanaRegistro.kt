@@ -1,6 +1,11 @@
 package com.example.appdebolsillousandojetpackcompose
 
+import FirebaseAuthViewModel
 import android.annotation.SuppressLint
+import android.content.ContentValues.TAG
+import android.util.Log
+
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -22,6 +27,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -29,17 +35,24 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.compose.rememberNavController
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthException
+import com.google.firebase.auth.FirebaseUser
+import androidx.navigation.NavController
 
 @SuppressLint("RememberReturnType")
-@Preview(showSystemUi = true)
-@Composable
-fun mostrarVentanaRegistro(){
 
+@Composable
+fun mostrarVentanaRegistro(navController: NavController, viewModel: FirebaseAuthViewModel = FirebaseAuthViewModel()){
+
+    val auth = FirebaseAuth.getInstance()
     val nombreEmpresa = remember { mutableStateOf("")}
     val correoElectronicoRegistro = remember { mutableStateOf("") }
     val numeroTelefono = remember { mutableStateOf("")}
     val contraseniaRegistro = remember { mutableStateOf("")}
-    val confirmacionContraseniaRegistro = remember { mutableStateOf("")}
+    val context = LocalContext.current
+
 
 
     Column(
@@ -99,16 +112,6 @@ fun mostrarVentanaRegistro(){
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
         )
 
-        OutlinedTextField(value = confirmacionContraseniaRegistro.value,
-            onValueChange = {confirmacionContraseniaRegistro.value = it},
-            label = {
-                Text(
-                    text = "Digite nuevamente su contraseña"
-                )
-            },
-            visualTransformation = PasswordVisualTransformation(),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
-        )
 
         Spacer(modifier = Modifier.height(40.dp))
 
@@ -123,7 +126,7 @@ fun mostrarVentanaRegistro(){
 
             Text(
                 modifier = Modifier.clickable {
-
+                    navController.navigate(Rutas.rutaVentanaLogin)
                 },
                 text = "Inicia sesión",
                 fontSize = 16.sp,
@@ -139,6 +142,19 @@ fun mostrarVentanaRegistro(){
                 .fillMaxWidth()
                 .padding(horizontal = 60.dp),
             onClick = {
+                auth.createUserWithEmailAndPassword(correoElectronicoRegistro.value, contraseniaRegistro.value)
+                    .addOnCompleteListener {
+                        Log.d(TAG, "Usuario creado con éxito")
+                        Log.d(TAG, "Éxito de inserción de usuario = ${it.isSuccessful}")
+                        Toast.makeText(context,"Usuario creado con éxito", Toast.LENGTH_SHORT).show()
+                        navController.navigate(Rutas.rutaVentanaLogin)
+                    }
+                    .addOnFailureListener {
+                        Log.d(TAG, "Error inesperado el usuario no ha podido ser creado")
+                        Log.d(TAG, "Excepción = ${it.message}")
+                        Log.d(TAG, "Excepción = ${it.localizedMessage}")
+                        Toast.makeText(context,"Error inesperado el usuario no ha podido ser creado", Toast.LENGTH_SHORT).show()
+                    }
 
             }) {
             Text(
@@ -150,3 +166,4 @@ fun mostrarVentanaRegistro(){
     }
 
 }
+
