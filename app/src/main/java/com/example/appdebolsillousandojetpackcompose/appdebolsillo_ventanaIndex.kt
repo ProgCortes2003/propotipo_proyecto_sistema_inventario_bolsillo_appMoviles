@@ -23,11 +23,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 
 
-@Preview(showSystemUi = true)
+
 @Composable
-fun mostrarVentanaIndex(){
+fun mostrarVentanaIndex(navController: NavController){
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -166,7 +167,9 @@ fun mostrarVentanaIndex(){
             Column (
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Button(onClick = { /*TODO*/ },
+                Button(onClick = {
+                                 navController.navigate(Rutas.rutaVentanaParametros)
+                                 },
                     modifier=Modifier.size(100.dp),
                     shape= CircleShape
                 ) {

@@ -19,10 +19,13 @@ fun iniciarNavegacion() {
             mostrarVentanaLogin(navController, viewModel)
         }
         composable(Rutas.rutaVentanaIndex){
-            mostrarVentanaIndex()
+            mostrarVentanaIndex(navController)
         }
         composable(Rutas.rutaVentanaRegistro){
             mostrarVentanaRegistro(navController, viewModel)
+        }
+        composable(Rutas.rutaVentanaParametros){
+            mostrarVentanaParametros()
         }
     })
 }
