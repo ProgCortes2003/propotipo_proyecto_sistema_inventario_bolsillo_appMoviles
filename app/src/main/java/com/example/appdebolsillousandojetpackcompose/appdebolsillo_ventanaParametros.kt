@@ -11,8 +11,14 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.material3.Button
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.KeyboardArrowUp
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -59,19 +65,38 @@ fun mostrarVentanaParametros(){
 
         Spacer(modifier = Modifier.height(80.dp))
 
-        Row(
+        Card(
+            colors= CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.primary
+            ),
             modifier = Modifier
-                .padding(20.dp)
-                .animateContentSize()
-        ) {
-            Column (
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(20.dp)
-            ) {
+                .padding(vertical = 4.dp, horizontal = 4.dp)
+                .fillMaxWidth()
 
+        ) {
+            Row(
+                modifier = Modifier
+                    .padding(10.dp)
+                    .animateContentSize()
+            ) {
+                Column (
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(10.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(text = "Productos",
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold)
+                }
+                IconButton(onClick = { expandir = !expandir }) {
+                    Icon(imageVector =
+                        if(expandir) Icons.Filled.KeyboardArrowUp else Icons.Filled.KeyboardArrowDown,
+                        contentDescription = "Por defecto el icono se encontrará mirando hacia abajo, a momento de clickearlo se mostrará mirando hacia arriba."
+                    )
+                    }
+                }
             }
         }
 
-        }
     }
