@@ -7,4 +7,6 @@ object Rutas {
     var rutaVentanaRegistro = "ventana_Registro"
     var rutaVentanaParametros = "ventana_Parametros"
 
+    var rutaVentanaParametrosProductos = "ventana_Parametros_Productos"
+
 }

@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Divider
@@ -35,10 +36,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 
-@Preview (showSystemUi = true)
+
 @Composable
-fun mostrarVentanaParametros(){
+fun mostrarVentanaParametros(navController: NavController){
 
     var expandir by remember { mutableStateOf(false) }
 
@@ -68,6 +70,17 @@ fun mostrarVentanaParametros(){
 
         Spacer(modifier = Modifier.height(80.dp))
 
+        Column (
+            modifier = Modifier.padding(horizontal = 40.dp)
+        ) {
+            Button(onClick = { navController.navigate(Rutas.rutaVentanaParametrosProductos) },
+                modifier = Modifier.fillMaxWidth()) {
+                Text(text = "Productos",
+                    fontSize = 20.sp)
+            }
+        }
+
+        /*
         Card(
             colors= CardDefaults.cardColors(
                 containerColor = MaterialTheme.colorScheme.primary
@@ -143,6 +156,7 @@ fun mostrarVentanaParametros(){
                 }
                 }
             }
+            */
         }
 
     }
