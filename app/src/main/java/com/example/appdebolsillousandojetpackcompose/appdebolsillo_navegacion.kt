@@ -2,11 +2,11 @@ package com.example.appdebolsillousandojetpackcompose
 
 import FirebaseAuthViewModel
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.appdebolsillousandojetpackcompose.ventanas_parametros.mostrarVentanaParametrosProductos
+import com.example.appdebolsillousandojetpackcompose.ventanas_parametros.mostrarVentanaParametrosLeerProductos
+
 
 
 @Composable
@@ -28,8 +28,8 @@ fun iniciarNavegacion() {
         composable(Rutas.rutaVentanaParametros){
             mostrarVentanaParametros(navController)
         }
-        composable(Rutas.rutaVentanaParametrosProductos){
-            mostrarVentanaParametrosProductos()
+        composable(Rutas.rutaVentanaParametrosLeerProductos){
+            mostrarVentanaParametrosLeerProductos()
         }
     })
 }

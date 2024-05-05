@@ -73,7 +73,7 @@ fun mostrarVentanaParametros(navController: NavController){
         Column (
             modifier = Modifier.padding(horizontal = 40.dp)
         ) {
-            Button(onClick = { navController.navigate(Rutas.rutaVentanaParametrosProductos) },
+            Button(onClick = { navController.navigate(Rutas.rutaVentanaParametrosLeerProductos) },
                 modifier = Modifier.fillMaxWidth()) {
                 Text(text = "Productos",
                     fontSize = 20.sp)
