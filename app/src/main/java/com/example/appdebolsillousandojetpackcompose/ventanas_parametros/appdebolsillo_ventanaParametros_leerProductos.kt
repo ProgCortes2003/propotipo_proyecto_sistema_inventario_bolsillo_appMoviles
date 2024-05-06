@@ -3,6 +3,7 @@ package com.example.appdebolsillousandojetpackcompose.ventanas_parametros
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
@@ -22,10 +23,6 @@ import com.google.firebase.database.database
 @Composable
 fun mostrarVentanaParametrosLeerProductos(){
 
-    val database = Firebase.database
-    val myRef = database.getReference("message")
-
-    myRef.setValue("¡Base de datos funcionando!")
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -35,13 +32,22 @@ fun mostrarVentanaParametrosLeerProductos(){
 
         LazyColumn{
 
+            val database = Firebase.database
+            val myRef = database.getReference("message")
+
+            myRef.setValue("¡Base de datos funcionando dentro de lazy column!")
+
         }
 
         FloatingActionButton(
             onClick = { /*TODO*/ },
             shape = CircleShape,
             containerColor = Color.Yellow,
-            modifier = Modifier.size(80.dp)) {
+            modifier = Modifier
+                .size(80.dp)
+                .padding(20.dp)
+                .align(Alignment.End)
+                ) {
 
           Icon(
               painter = painterResource(id = com.example.appdebolsillousandojetpackcompose.R.drawable.svg_aniadir_producto) ,

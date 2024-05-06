@@ -19,6 +19,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.google.firebase.Firebase
 import com.google.firebase.database.database
+import com.example.appdebolsillousandojetpackcompose.ventanas_parametros.clasesVentanaParametros.Producto
+
+
 
 @Preview(showSystemUi = true)
 @Composable
@@ -31,6 +34,7 @@ fun mostrarVentanaCrearProducto(){
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+
 
         Text(
             text = "Crear un producto",
@@ -52,6 +56,10 @@ fun mostrarVentanaCrearProducto(){
                     .fillMaxWidth()
 
             ) {
+
+
+
+
 
             }
         }
