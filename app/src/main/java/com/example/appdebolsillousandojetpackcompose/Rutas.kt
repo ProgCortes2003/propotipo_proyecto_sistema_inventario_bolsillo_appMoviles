@@ -8,5 +8,5 @@ object Rutas {
     var rutaVentanaParametros = "ventana_Parametros"
 
     var rutaVentanaParametrosLeerProductos = "ventana_Parametros_Leer_Productos"
-
+    var rutaVentanaParametrosCrearProducto = "ventana_Parametros_Crear_Producto"
 }

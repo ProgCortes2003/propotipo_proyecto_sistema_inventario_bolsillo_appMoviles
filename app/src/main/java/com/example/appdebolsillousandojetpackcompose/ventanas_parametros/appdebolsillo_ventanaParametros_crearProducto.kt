@@ -1,5 +1,6 @@
 package com.example.appdebolsillousandojetpackcompose.ventanas_parametros
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,28 +17,32 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import com.example.appdebolsillousandojetpackcompose.Rutas
 import com.google.firebase.Firebase
 import com.google.firebase.database.database
 import com.example.appdebolsillousandojetpackcompose.ventanas_parametros.clasesVentanaParametros.Producto
-import com.example.appdebolsillousandojetpackcompose.viewmodels.administradorRealtimeDatabase
+import com.google.firebase.database.FirebaseDatabase
+import com.google.protobuf.Value
+import java.security.Key
 
-
-
-@Preview(showSystemUi = true)
 @Composable
-fun mostrarVentanaCrearProducto(){
+fun mostrarVentanaCrearProducto(navController: NavController){
 
     val categoriaProducto = remember { mutableStateOf("")}
     val nombreProducto = remember { mutableStateOf("")}
     val codigoProducto = remember { mutableStateOf("")}
     val valorCostoProducto = remember { mutableStateOf("")}
     val valorVentaProducto = remember { mutableStateOf("")}
-    val administradorRealtimeDatabase:administradorRealtimeDatabase
-    val producto = Producto()
+    val database = Firebase.database
+    val myRef = database.getReference("Productos")
+    val context = LocalContext.current
+
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -109,9 +114,37 @@ fun mostrarVentanaCrearProducto(){
 
                 Spacer(modifier = Modifier.height(20.dp))
 
-                Button(onClick = {
 
-                    administradorRealtimeDatabase.incluirProducto()
+                Button(onClick = {
+                    if(nombreProducto.value.isNotEmpty() &&
+                        categoriaProducto.value.isNotEmpty() &&
+                        codigoProducto.value.isNotEmpty() &&
+                        valorCostoProducto.value.isNotEmpty() &&
+                        valorVentaProducto.value.isNotEmpty()) {
+
+                        val producto = Producto(categoriaProducto.value,
+                            nombreProducto.value,
+                            codigoProducto.value,
+                            valorCostoProducto.value.toDouble(),
+                            valorVentaProducto.value.toDouble())
+
+                        myRef.child(nombreProducto.value).setValue(producto).addOnSuccessListener {
+                            categoriaProducto.value = ""
+                            nombreProducto.value = ""
+                            codigoProducto.value = ""
+                            valorCostoProducto.value = ""
+                            valorVentaProducto.value = ""
+                            Toast.makeText(context,"¡Datos ingresados con éxito!",Toast.LENGTH_SHORT).show()
+                            navController.navigate(Rutas.rutaVentanaParametrosLeerProductos)
+                        }.addOnFailureListener {
+                            Toast.makeText(context,"¡Ha ocurrido un error!",Toast.LENGTH_SHORT).show()
+                        }
+
+
+                    }else{
+                        Toast.makeText(context,"¡Debe rellenar todos los campos!",Toast.LENGTH_SHORT).show()
+                    }
+
 
                 }) {
                     Text(text = "Crear Producto",
@@ -120,14 +153,10 @@ fun mostrarVentanaCrearProducto(){
                     )
                 }
 
-
-
             }
         }
-
-
-
-
     }
 
 }
+
+
