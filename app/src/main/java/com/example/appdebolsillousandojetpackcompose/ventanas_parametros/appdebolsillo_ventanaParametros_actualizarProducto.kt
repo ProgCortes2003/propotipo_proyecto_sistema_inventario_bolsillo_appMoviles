@@ -20,7 +20,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavBackStackEntry
@@ -29,12 +28,11 @@ import com.example.appdebolsillousandojetpackcompose.Rutas
 import com.google.firebase.Firebase
 import com.google.firebase.database.database
 import com.example.appdebolsillousandojetpackcompose.ventanas_parametros.clasesVentanaParametros.Producto
-import com.google.firebase.database.FirebaseDatabase
-import com.google.protobuf.Value
-import java.security.Key
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 
 @Composable
-fun mostrarVentanaActualizarProducto(navController: NavController, navBackStackEntry: NavBackStackEntry){
+fun mostrarVentanaActualizarProducto(navController: NavController, productoId : String){
 
     val categoriaProducto = remember { mutableStateOf("")}
     val nombreProducto = remember { mutableStateOf("")}
@@ -42,15 +40,12 @@ fun mostrarVentanaActualizarProducto(navController: NavController, navBackStackE
     val valorCostoProducto = remember { mutableStateOf("")}
     val valorVentaProducto = remember { mutableStateOf("")}
     val database = Firebase.database
-    val productoId = navBackStackEntry.arguments?.getString("productoId")
     val context = LocalContext.current
+    val productoReferencia = database.getReference("Productos").child(productoId)
 
-    if(productoId!= null){
 
-        val myRef = database.getReference("Productos").child(productoId)
-
-        LaunchedEffect(Unit) {
-            myRef.get().addOnSuccessListener { snapshot ->
+        LaunchedEffect(productoReferencia) {
+            productoReferencia.get().addOnSuccessListener { snapshot ->
                 val producto = snapshot.getValue(Producto::class.java)
                 producto?.let {
                     categoriaProducto.value = it.categoria
@@ -61,123 +56,118 @@ fun mostrarVentanaActualizarProducto(navController: NavController, navBackStackE
                 }
             }
         }
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
 
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
+
+        Text(
+            text = "Actualizar un producto",
+            fontSize = 28.sp,
+            fontWeight = FontWeight.Bold
+        )
+
+        Spacer(modifier = Modifier.height(50.dp))
+
+        Row (
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(
+                    horizontal = 80.dp
+                )
         ) {
-
-
-            Text(
-                text = "Crear un producto",
-                fontSize = 28.sp,
-                fontWeight = FontWeight.Bold
-            )
-
-            Spacer(modifier = Modifier.height(50.dp))
-
-            Row (
+            Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(
-                        horizontal = 80.dp
-                    )
+                    .fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
 
-                    OutlinedTextField(
-                        value = categoriaProducto.value,
-                        onValueChange = {categoriaProducto.value = it},
-                        label = {
-                            Text(text = "Categoría")
-                        }
-                    )
+                OutlinedTextField(
+                    value = categoriaProducto.value,
+                    onValueChange = {categoriaProducto.value = it},
+                    label = {
+                        Text(text = "${categoriaProducto.value}")
+                    }
+                )
 
-                    OutlinedTextField(
-                        value = nombreProducto.value,
-                        onValueChange = {nombreProducto.value = it},
-                        label = {
-                            Text(text = "Nombre del producto")
-                        }
-                    )
+                OutlinedTextField(
+                    value = nombreProducto.value,
+                    onValueChange = {nombreProducto.value = it},
+                    label = {
+                        Text(text = "${nombreProducto.value}")
+                    }
+                )
 
-                    OutlinedTextField(
-                        value = codigoProducto.value,
-                        onValueChange = {codigoProducto.value = it},
-                        label = {
-                            Text(text = "Código del producto")
-                        }
-                    )
+                OutlinedTextField(
+                    value = codigoProducto.value,
+                    onValueChange = {codigoProducto.value = it},
+                    label = {
+                        Text(text = "${codigoProducto.value}")
+                    }
+                )
 
-                    OutlinedTextField(
-                        value = valorCostoProducto.value,
-                        onValueChange = {valorCostoProducto.value = it},
-                        label = {
-                            Text(text = "Valor costo producto")
-                        }
-                    )
+                OutlinedTextField(
+                    value = valorCostoProducto.value,
+                    onValueChange = {valorCostoProducto.value = it},
+                    label = {
+                        Text(text = "${valorCostoProducto.value}")
+                    }
+                )
 
-                    OutlinedTextField(
-                        value = valorVentaProducto.value,
-                        onValueChange = {valorVentaProducto.value = it},
-                        label = {
-                            Text(text = "Valor venta producto")
-                        }
-                    )
+                OutlinedTextField(
+                    value = valorVentaProducto.value,
+                    onValueChange = {valorVentaProducto.value = it},
+                    label = {
+                        Text(text = "${valorVentaProducto.value}")
+                    }
+                )
 
-                    Spacer(modifier = Modifier.height(20.dp))
+                Spacer(modifier = Modifier.height(20.dp))
 
 
-                    Button(onClick = {
-                        if(nombreProducto.value.isNotEmpty() &&
-                            categoriaProducto.value.isNotEmpty() &&
-                            codigoProducto.value.isNotEmpty() &&
-                            valorCostoProducto.value.isNotEmpty() &&
-                            valorVentaProducto.value.isNotEmpty()) {
+                Button(onClick = {
+                    if(nombreProducto.value.isNotEmpty() &&
+                        categoriaProducto.value.isNotEmpty() &&
+                        codigoProducto.value.isNotEmpty() &&
+                        valorCostoProducto.value.isNotEmpty() &&
+                        valorVentaProducto.value.isNotEmpty()) {
 
-                            val producto = Producto(
-                                categoriaProducto.value,
-                                nombreProducto.value,
-                                codigoProducto.value,
-                                valorCostoProducto.value.toDouble(),
-                                valorVentaProducto.value.toDouble()
-                            )
-                            myRef.setValue(producto)
-                                .addOnSuccessListener {
-                                    Toast.makeText(context, "¡Datos actualizados con éxito!", Toast.LENGTH_SHORT).show()
-                                    navController.navigate(Rutas.rutaVentanaParametrosLeerProductos)
-                                }
-                                .addOnFailureListener {
-                                    Toast.makeText(context, "¡Ha ocurrido un error!", Toast.LENGTH_SHORT).show()
-                                }
-
-                        }else{
-                            Toast.makeText(context,"¡Debe rellenar todos los campos!",Toast.LENGTH_SHORT).show()
-                        }
-
-
-                    }) {
-                        Text(text = "Actualizar Producto",
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 20.sp
+                        val producto = Producto(
+                            productoId,
+                            categoriaProducto.value,
+                            nombreProducto.value,
+                            codigoProducto.value,
+                            valorCostoProducto.value.toDouble(),
+                            valorVentaProducto.value.toDouble()
                         )
+
+                        productoReferencia.setValue(producto)
+                            .addOnSuccessListener {
+                                Toast.makeText(context, "¡Datos actualizados con éxito!", Toast.LENGTH_SHORT).show()
+                                navController.navigate(Rutas.rutaVentanaParametrosLeerProductos)
+                            }
+                            .addOnFailureListener {
+                                Toast.makeText(context, "¡Ha ocurrido un error!", Toast.LENGTH_SHORT).show()
+                            }
+
+                    }else{
+                        Toast.makeText(context,"¡Debe rellenar todos los campos!",Toast.LENGTH_SHORT).show()
                     }
 
+
+                }) {
+                    Text(text = "Actualizar Producto",
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 20.sp
+                    )
                 }
+
             }
         }
-    }else{
-        
-        Text(text = "Error no se ha seleccionado producto alguno para actualizar su información")
-
-        Toast.makeText(context, "No se proporcionó el ID del producto", Toast.LENGTH_SHORT).show()
-
     }
+
 
 
 

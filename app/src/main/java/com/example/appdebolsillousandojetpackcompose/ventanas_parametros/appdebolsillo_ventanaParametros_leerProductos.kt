@@ -1,6 +1,7 @@
 package com.example.appdebolsillousandojetpackcompose.ventanas_parametros
 
 import android.widget.Space
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -16,6 +17,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.AlertDialogDefaults
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -29,6 +32,7 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -44,11 +48,17 @@ import com.google.firebase.components.Lazy
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.ExperimentalMaterial3Api
+
+
 
 @Composable
 fun mostrarVentanaParametrosLeerProductos(navController: NavController){
 
     val registros = remember { buscarTodosLosRegistrosEnBaseDeDatos()}
+    val abrirAlertDialog = remember { mutableStateOf("") }
+    val context = LocalContext.current
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -61,21 +71,27 @@ fun mostrarVentanaParametrosLeerProductos(navController: NavController){
             fontWeight = FontWeight.Bold
         )
         
-        LazyColumn(content = {
-            items(registros){
-                registro ->
+        LazyColumn {
+            items(registros) { registro ->
 
-                Card (modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(10.dp)) {
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(10.dp)
+                ) {
 
-                    Row (modifier = Modifier.fillMaxWidth(),
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(20.dp),
                         verticalAlignment = Alignment.CenterVertically
-                        ){
+
+                    ) {
 
                         Column {
 
-                            Text(text = "Nombre del producto: ${registro.nombre}",
+                            Text(
+                                text = "Nombre del producto: ${registro.nombre}",
                                 fontWeight = FontWeight.Bold,
                                 fontSize = 20.sp
                             )
@@ -96,57 +112,81 @@ fun mostrarVentanaParametrosLeerProductos(navController: NavController){
 
                             Text(text = "Valor de venta: ${registro.valorVenta}")
 
-                        }
+                            Spacer(modifier = Modifier.height(10.dp))
 
-                        Spacer(modifier = Modifier.width(20.dp))
+                            Text(text = "Id producto: ${registro.productoId}")
 
-                        Column(
-                            verticalArrangement = Arrangement.Center,
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-
-                            Button(onClick = {
-                                             /*TODO*/
-                                             },
-                                shape= CircleShape,
+                            Row(
                                 modifier = Modifier
-                                    .size(50.dp)
-                                    ,
-                                colors = ButtonDefaults.buttonColors(Color.Blue)
-                                    ) {
+                                    .fillMaxWidth()
+                                    .padding(10.dp),
+                                horizontalArrangement = Arrangement.Center
+                            ) {
 
-                                Icon(painter = painterResource(id = com.example.appdebolsillousandojetpackcompose.R.drawable.svg_icono_editar_listado_producto),
-                                    contentDescription = "icono para editar el producto",
-                                    tint = Color.White)
-                            }
-                            
-                            Spacer(modifier = Modifier.height(15.dp))
+                                FloatingActionButton(
+                                    onClick = {
 
-                            Button(onClick = {
-                                             /*TODO*/
-                                             },
-                                shape= CircleShape,
-                                modifier = Modifier
-                                    .size(50.dp)
-                                    ,
-                                colors = ButtonDefaults.buttonColors(Color.Red)
+                                        navController.navigate(Rutas.rutaVentanaParamentosActualizarProducto + "/${registro.productoId.toString()}")
+
+                                    },
+                                    shape = CircleShape,
+                                    containerColor = Color.Blue,
+                                    modifier = Modifier.size(50.dp)
                                 ) {
 
-                                Icon(painter = painterResource(id = com.example.appdebolsillousandojetpackcompose.R.drawable.svg_icono_eliminar_producto_listado_producto),
-                                    contentDescription = "icono para eliminir producto",
-                                    tint = Color.White)
+                                    Icon(
+                                        painter = painterResource(id = com.example.appdebolsillousandojetpackcompose.R.drawable.svg_icono_editar_listado_producto),
+                                        contentDescription = "opción editar producto",
+                                        tint = Color.White,
+                                        modifier = Modifier.padding(10.dp)
+                                    )
+
+                                }
+
+                                Spacer(modifier = Modifier.width(20.dp))
+
+                                FloatingActionButton(
+                                    onClick = {
+                                        val database = Firebase.database
+                                        val referenciaProducto = database.getReference("Productos")
+                                            .child(registro.productoId.toString())
+
+
+                                        AlertDialog(
+                                            onDismissRequest = { /*TODO*/ },
+                                            title = { /*TODO*/ },
+                                            text = { /*TODO*/ },
+                                            confirmButton = { /*TODO*/ },
+                                            dismissButton = { /*TODO*/ }
+                                        )
+
+
+                                    },
+                                    shape = CircleShape,
+                                    containerColor = Color.Red,
+                                    modifier = Modifier.size(50.dp)
+                                ) {
+
+                                    Icon(
+                                        painter = painterResource(id = com.example.appdebolsillousandojetpackcompose.R.drawable.svg_icono_eliminar_producto_listado_producto),
+                                        contentDescription = "opción eliminar producto",
+                                        tint = Color.White,
+                                        modifier = Modifier.padding(10.dp)
+                                    )
+
+                                    }
 
                             }
 
-
                         }
 
+
                     }
-                    
+
 
                 }
             }
-        })
+        }
 
 
 
@@ -180,6 +220,7 @@ fun buscarTodosLosRegistrosEnBaseDeDatos():List<Producto> {
     val database = Firebase.database
     val myRef = database.getReference("Productos")
 
+
     val listaProductos = mutableListOf<Producto>()
 
     myRef.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -190,8 +231,8 @@ fun buscarTodosLosRegistrosEnBaseDeDatos():List<Producto> {
                 val codigo = data.child("codigo").getValue(String::class.java) ?: ""
                 val valorCosto = data.child("valorCosto").getValue(Double::class.java) ?: 0.0
                 val valorVenta = data.child("valorVenta").getValue(Double::class.java) ?: 0.0
-
-                val producto = Producto(categoria, nombre, codigo, valorCosto, valorVenta)
+                val productoId = data.key
+                val producto = Producto(productoId,categoria, nombre, codigo, valorCosto, valorVenta)
 
                 listaProductos.add(producto)
             }
@@ -204,6 +245,9 @@ fun buscarTodosLosRegistrosEnBaseDeDatos():List<Producto> {
     )
     return listaProductos
 }
+
+
+
 
 
 

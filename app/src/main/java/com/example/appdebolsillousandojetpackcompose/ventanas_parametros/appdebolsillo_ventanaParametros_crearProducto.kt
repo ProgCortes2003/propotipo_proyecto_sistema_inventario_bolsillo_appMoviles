@@ -122,14 +122,16 @@ fun mostrarVentanaCrearProducto(navController: NavController){
                         valorCostoProducto.value.isNotEmpty() &&
                         valorVentaProducto.value.isNotEmpty()) {
 
-                        val producto = Producto(categoriaProducto.value,
+                        val newProductRef = myRef.push()
+                        val productoId = newProductRef.key
+
+                        val producto = Producto(
+                            productoId,
+                            categoriaProducto.value,
                             nombreProducto.value,
                             codigoProducto.value,
                             valorCostoProducto.value.toDouble(),
                             valorVentaProducto.value.toDouble())
-
-                        val newProductRef = myRef.push()
-                        val productoId = newProductRef.key
 
 
                         newProductRef.setValue(producto).addOnSuccessListener {

@@ -1,9 +1,29 @@
 package com.example.appdebolsillousandojetpackcompose.ventanas_parametros.clasesVentanaParametros
 
-data class Producto(
-    val categoria:String,
-    val nombre: String,
-    val codigo: String,
-    val valorCosto: Double,
-    val valorVenta: Double
-)
+class Producto() {
+
+    var productoId: String? = null
+    var categoria: String = ""
+    var nombre: String = ""
+    var codigo: String = ""
+    var valorCosto: Double = 0.0
+    var valorVenta: Double = 0.0
+
+    constructor(
+        productoId: String?,
+        categoria: String,
+        nombre: String,
+        codigo: String,
+        valorCosto: Double,
+        valorVenta: Double
+    ) : this() {
+        this.productoId = productoId
+        this.categoria = categoria
+        this.nombre = nombre
+        this.codigo = codigo
+        this.valorCosto = valorCosto
+        this.valorVenta = valorVenta
+    }
+}
+
+
