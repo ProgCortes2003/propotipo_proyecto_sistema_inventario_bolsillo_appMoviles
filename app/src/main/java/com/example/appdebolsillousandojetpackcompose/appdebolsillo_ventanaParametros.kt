@@ -54,7 +54,7 @@ fun mostrarVentanaParametros(navController: NavController){
             Column (
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Image(painter = painterResource(id = R.drawable.svg_parametros),
+                Image(painter = painterResource(id = com.example.appdebolsillousandojetpackcompose.R.drawable.svg_parametros),
                     contentDescription = "Icono de la ventana parámetros.",
                     modifier = Modifier.size(100.dp)
                 )

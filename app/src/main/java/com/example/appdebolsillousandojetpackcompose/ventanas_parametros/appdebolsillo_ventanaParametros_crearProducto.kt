@@ -128,13 +128,18 @@ fun mostrarVentanaCrearProducto(navController: NavController){
                             valorCostoProducto.value.toDouble(),
                             valorVentaProducto.value.toDouble())
 
-                        myRef.child(nombreProducto.value).setValue(producto).addOnSuccessListener {
+                        val newProductRef = myRef.push()
+                        val productoId = newProductRef.key
+
+
+                        newProductRef.setValue(producto).addOnSuccessListener {
                             categoriaProducto.value = ""
                             nombreProducto.value = ""
                             codigoProducto.value = ""
                             valorCostoProducto.value = ""
                             valorVentaProducto.value = ""
                             Toast.makeText(context,"¡Datos ingresados con éxito!",Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context,"¡Identificacion del producto generado: ${productoId}",Toast.LENGTH_SHORT).show()
                             navController.navigate(Rutas.rutaVentanaParametrosLeerProductos)
                         }.addOnFailureListener {
                             Toast.makeText(context,"¡Ha ocurrido un error!",Toast.LENGTH_SHORT).show()

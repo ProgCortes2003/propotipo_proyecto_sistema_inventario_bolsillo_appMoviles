@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.appdebolsillousandojetpackcompose.ventanas_parametros.mostrarVentanaActualizarProducto
 import com.example.appdebolsillousandojetpackcompose.ventanas_parametros.mostrarVentanaCrearProducto
 import com.example.appdebolsillousandojetpackcompose.ventanas_parametros.mostrarVentanaParametrosLeerProductos
 
@@ -35,6 +36,7 @@ fun iniciarNavegacion() {
         composable(Rutas.rutaVentanaParametrosCrearProducto){
             mostrarVentanaCrearProducto(navController)
         }
+
 
     })
 }

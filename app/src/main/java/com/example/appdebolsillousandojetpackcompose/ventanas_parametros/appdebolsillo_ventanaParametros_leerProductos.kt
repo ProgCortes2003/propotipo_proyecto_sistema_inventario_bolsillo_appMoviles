@@ -1,6 +1,7 @@
 package com.example.appdebolsillousandojetpackcompose.ventanas_parametros
 
 import android.widget.Space
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -11,9 +12,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -51,6 +55,11 @@ fun mostrarVentanaParametrosLeerProductos(navController: NavController){
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ){
+
+        Text(text = "Listado de Productos",
+            fontSize = 24.sp,
+            fontWeight = FontWeight.Bold
+        )
         
         LazyColumn(content = {
             items(registros){
@@ -59,27 +68,82 @@ fun mostrarVentanaParametrosLeerProductos(navController: NavController){
                 Card (modifier = Modifier
                     .fillMaxWidth()
                     .padding(10.dp)) {
-                    
-                    Text(text = "Nombre del producto: ${registro.nombre}",
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 20.sp
-                    )
-                    
-                    Spacer(modifier = Modifier.height(10.dp))
-                    
-                    Text(text = "Categoria del producto: ${registro.categoria}")
 
-                    Spacer(modifier = Modifier.height(10.dp))
+                    Row (modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically
+                        ){
+
+                        Column {
+
+                            Text(text = "Nombre del producto: ${registro.nombre}",
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 20.sp
+                            )
+
+                            Spacer(modifier = Modifier.height(10.dp))
+
+                            Text(text = "Categoria del producto: ${registro.categoria}")
+
+                            Spacer(modifier = Modifier.height(10.dp))
+
+                            Text(text = "Código del producto: ${registro.codigo}")
+
+                            Spacer(modifier = Modifier.height(10.dp))
+
+                            Text(text = "Valor de costo: ${registro.valorCosto}")
+
+                            Spacer(modifier = Modifier.height(10.dp))
+
+                            Text(text = "Valor de venta: ${registro.valorVenta}")
+
+                        }
+
+                        Spacer(modifier = Modifier.width(20.dp))
+
+                        Column(
+                            verticalArrangement = Arrangement.Center,
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+
+                            Button(onClick = {
+                                             /*TODO*/
+                                             },
+                                shape= CircleShape,
+                                modifier = Modifier
+                                    .size(50.dp)
+                                    ,
+                                colors = ButtonDefaults.buttonColors(Color.Blue)
+                                    ) {
+
+                                Icon(painter = painterResource(id = com.example.appdebolsillousandojetpackcompose.R.drawable.svg_icono_editar_listado_producto),
+                                    contentDescription = "icono para editar el producto",
+                                    tint = Color.White)
+                            }
+                            
+                            Spacer(modifier = Modifier.height(15.dp))
+
+                            Button(onClick = {
+                                             /*TODO*/
+                                             },
+                                shape= CircleShape,
+                                modifier = Modifier
+                                    .size(50.dp)
+                                    ,
+                                colors = ButtonDefaults.buttonColors(Color.Red)
+                                ) {
+
+                                Icon(painter = painterResource(id = com.example.appdebolsillousandojetpackcompose.R.drawable.svg_icono_eliminar_producto_listado_producto),
+                                    contentDescription = "icono para eliminir producto",
+                                    tint = Color.White)
+
+                            }
+
+
+                        }
+
+                    }
                     
-                    Text(text = "Código del producto: ${registro.codigo}")
-                    
-                    Spacer(modifier = Modifier.height(10.dp))
-                    
-                    Text(text = "Valor de costo: ${registro.valorCosto}")
-                    
-                    Spacer(modifier = Modifier.height(10.dp))
-                    
-                    Text(text = "Valor de venta: ${registro.valorVenta}")
+
                 }
             }
         })
@@ -99,9 +163,10 @@ fun mostrarVentanaParametrosLeerProductos(navController: NavController){
                 ) {
 
           Icon(
-              painter = painterResource(id = com.example.appdebolsillousandojetpackcompose.R.drawable.svg_aniadir_producto) ,
+              painter = painterResource(id = com.example.appdebolsillousandojetpackcompose.R.drawable.svg_aniadir) ,
               contentDescription = "icono de más que denota agregar un nuevo producto",
-              tint = Color.Black
+              tint = Color.Black,
+              modifier = Modifier.padding(10.dp)
           )
 
 
