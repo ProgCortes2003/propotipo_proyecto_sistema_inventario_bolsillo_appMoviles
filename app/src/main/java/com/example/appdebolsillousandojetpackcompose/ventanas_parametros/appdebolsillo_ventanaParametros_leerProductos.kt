@@ -50,14 +50,16 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
-
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 
 
 @Composable
 fun mostrarVentanaParametrosLeerProductos(navController: NavController){
 
     val registros = remember { buscarTodosLosRegistrosEnBaseDeDatos()}
-    val abrirAlertDialog = remember { mutableStateOf("") }
+    val abrirAlertDialog = remember { mutableStateOf(false) }
+    var productoIdSeleccionado by remember { mutableStateOf<String?>(null) }
     val context = LocalContext.current
 
     Column(
@@ -70,7 +72,7 @@ fun mostrarVentanaParametrosLeerProductos(navController: NavController){
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold
         )
-        
+
         LazyColumn {
             items(registros) { registro ->
 
@@ -116,6 +118,7 @@ fun mostrarVentanaParametrosLeerProductos(navController: NavController){
 
                             Text(text = "Id producto: ${registro.productoId}")
 
+
                             Row(
                                 modifier = Modifier
                                     .fillMaxWidth()
@@ -126,7 +129,7 @@ fun mostrarVentanaParametrosLeerProductos(navController: NavController){
                                 FloatingActionButton(
                                     onClick = {
 
-                                        navController.navigate(Rutas.rutaVentanaParamentosActualizarProducto + "/${registro.productoId.toString()}")
+                                        navController.navigate(Rutas.rutaVentanaParametrosActualizarProducto + "/${registro.productoId.toString()}")
 
                                     },
                                     shape = CircleShape,
@@ -147,19 +150,7 @@ fun mostrarVentanaParametrosLeerProductos(navController: NavController){
 
                                 FloatingActionButton(
                                     onClick = {
-                                        val database = Firebase.database
-                                        val referenciaProducto = database.getReference("Productos")
-                                            .child(registro.productoId.toString())
-
-
-                                        AlertDialog(
-                                            onDismissRequest = { /*TODO*/ },
-                                            title = { /*TODO*/ },
-                                            text = { /*TODO*/ },
-                                            confirmButton = { /*TODO*/ },
-                                            dismissButton = { /*TODO*/ }
-                                        )
-
+                                              navController.navigate(Rutas.rutaVentanaParametrosEliminarproducto+"/${registro.productoId.toString()}")
 
                                     },
                                     shape = CircleShape,
@@ -176,6 +167,8 @@ fun mostrarVentanaParametrosLeerProductos(navController: NavController){
 
                                     }
 
+
+
                             }
 
                         }
@@ -187,6 +180,8 @@ fun mostrarVentanaParametrosLeerProductos(navController: NavController){
                 }
             }
         }
+
+
 
 
 

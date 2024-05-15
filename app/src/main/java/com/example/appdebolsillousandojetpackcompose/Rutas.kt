@@ -9,5 +9,6 @@ object Rutas {
 
     var rutaVentanaParametrosLeerProductos = "ventana_Parametros_Leer_Productos"
     var rutaVentanaParametrosCrearProducto = "ventana_Parametros_Crear_Producto"
-    var rutaVentanaParamentosActualizarProducto = "ventana_Parametros_Actualizar_Producto"
+    var rutaVentanaParametrosActualizarProducto = "ventana_Parametros_Actualizar_Producto"
+    var rutaVentanaParametrosEliminarproducto = "ventana_Parametros_Eliminar_Producto"
 }

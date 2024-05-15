@@ -8,6 +8,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.appdebolsillousandojetpackcompose.ventanas_parametros.clasesVentanaParametros.Producto
+import com.example.appdebolsillousandojetpackcompose.ventanas_parametros.mostrarAlertDialogEliminarProducto
 import com.example.appdebolsillousandojetpackcompose.ventanas_parametros.mostrarVentanaActualizarProducto
 import com.example.appdebolsillousandojetpackcompose.ventanas_parametros.mostrarVentanaCrearProducto
 import com.example.appdebolsillousandojetpackcompose.ventanas_parametros.mostrarVentanaParametrosLeerProductos
@@ -44,9 +45,14 @@ fun iniciarNavegacion() {
             mostrarVentanaCrearProducto(navController)
         }
 
-        composable(Rutas.rutaVentanaParamentosActualizarProducto+"/{productoId}"){
+        composable(Rutas.rutaVentanaParametrosActualizarProducto+"/{productoId}"){
             val productoId = it.arguments?.getString("productoId")
             mostrarVentanaActualizarProducto(navController, productoId?: "")
+        }
+
+        composable(Rutas.rutaVentanaParametrosEliminarproducto+"/{productoId}"){
+            val productoId = it.arguments?.getString("productoId")
+            mostrarAlertDialogEliminarProducto(navController, productoId?:"")
         }
 
 

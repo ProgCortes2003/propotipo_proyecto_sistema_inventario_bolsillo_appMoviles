@@ -88,7 +88,7 @@ fun mostrarVentanaActualizarProducto(navController: NavController, productoId : 
                     value = categoriaProducto.value,
                     onValueChange = {categoriaProducto.value = it},
                     label = {
-                        Text(text = "${categoriaProducto.value}")
+                        Text(text = "Categoría")
                     }
                 )
 
@@ -96,7 +96,7 @@ fun mostrarVentanaActualizarProducto(navController: NavController, productoId : 
                     value = nombreProducto.value,
                     onValueChange = {nombreProducto.value = it},
                     label = {
-                        Text(text = "${nombreProducto.value}")
+                        Text(text = "Nombre del Producto")
                     }
                 )
 
@@ -104,7 +104,7 @@ fun mostrarVentanaActualizarProducto(navController: NavController, productoId : 
                     value = codigoProducto.value,
                     onValueChange = {codigoProducto.value = it},
                     label = {
-                        Text(text = "${codigoProducto.value}")
+                        Text(text = "Código del producto")
                     }
                 )
 
@@ -112,7 +112,7 @@ fun mostrarVentanaActualizarProducto(navController: NavController, productoId : 
                     value = valorCostoProducto.value,
                     onValueChange = {valorCostoProducto.value = it},
                     label = {
-                        Text(text = "${valorCostoProducto.value}")
+                        Text(text = "Valor costo producto")
                     }
                 )
 
@@ -120,7 +120,7 @@ fun mostrarVentanaActualizarProducto(navController: NavController, productoId : 
                     value = valorVentaProducto.value,
                     onValueChange = {valorVentaProducto.value = it},
                     label = {
-                        Text(text = "${valorVentaProducto.value}")
+                        Text(text = "Valor venta producto")
                     }
                 )
 
