@@ -1,4 +1,4 @@
-package com.example.appdebolsillousandojetpackcompose.ventanas_parametros
+package com.example.appdebolsillousandojetpackcompose.ventanas_parametros.crud_productos
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
@@ -13,7 +13,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -22,17 +21,15 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import com.example.appdebolsillousandojetpackcompose.Rutas
 import com.google.firebase.Firebase
 import com.google.firebase.database.database
 import com.example.appdebolsillousandojetpackcompose.ventanas_parametros.clasesVentanaParametros.Producto
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
+import com.google.firebase.auth.FirebaseAuth
 
 @Composable
-fun mostrarVentanaActualizarProducto(navController: NavController, productoId : String){
+fun mostrarVentanaCrearProducto(navController: NavController){
 
     val categoriaProducto = remember { mutableStateOf("")}
     val nombreProducto = remember { mutableStateOf("")}
@@ -40,22 +37,11 @@ fun mostrarVentanaActualizarProducto(navController: NavController, productoId : 
     val valorCostoProducto = remember { mutableStateOf("")}
     val valorVentaProducto = remember { mutableStateOf("")}
     val database = Firebase.database
+    val idUsuario = FirebaseAuth.getInstance().currentUser?.uid
+    val myRef = idUsuario?.let { database.getReference("productos").child(it) }
     val context = LocalContext.current
-    val productoReferencia = database.getReference("Productos").child(productoId)
 
 
-        LaunchedEffect(productoReferencia) {
-            productoReferencia.get().addOnSuccessListener { snapshot ->
-                val producto = snapshot.getValue(Producto::class.java)
-                producto?.let {
-                    categoriaProducto.value = it.categoria
-                    nombreProducto.value = it.nombre
-                    codigoProducto.value = it.codigo
-                    valorCostoProducto.value = it.valorCosto.toString()
-                    valorVentaProducto.value = it.valorVenta.toString()
-                }
-            }
-        }
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
@@ -64,11 +50,11 @@ fun mostrarVentanaActualizarProducto(navController: NavController, productoId : 
 
 
         Text(
-            text = "Actualizar un producto",
+            text = "Crear un producto",
             fontSize = 28.sp,
             fontWeight = FontWeight.Bold
         )
-
+        
         Spacer(modifier = Modifier.height(50.dp))
 
         Row (
@@ -90,13 +76,13 @@ fun mostrarVentanaActualizarProducto(navController: NavController, productoId : 
                     label = {
                         Text(text = "Categoría")
                     }
-                )
+                    )
 
                 OutlinedTextField(
                     value = nombreProducto.value,
                     onValueChange = {nombreProducto.value = it},
                     label = {
-                        Text(text = "Nombre del Producto")
+                        Text(text = "Nombre del producto")
                     }
                 )
 
@@ -134,23 +120,31 @@ fun mostrarVentanaActualizarProducto(navController: NavController, productoId : 
                         valorCostoProducto.value.isNotEmpty() &&
                         valorVentaProducto.value.isNotEmpty()) {
 
+                        val newProductRef = myRef?.push()
+                        val productoId = newProductRef?.key
+
                         val producto = Producto(
                             productoId,
                             categoriaProducto.value,
                             nombreProducto.value,
                             codigoProducto.value,
                             valorCostoProducto.value.toDouble(),
-                            valorVentaProducto.value.toDouble()
-                        )
+                            valorVentaProducto.value.toDouble())
 
-                        productoReferencia.setValue(producto)
-                            .addOnSuccessListener {
-                                Toast.makeText(context, "¡Datos actualizados con éxito!", Toast.LENGTH_SHORT).show()
-                                navController.navigate(Rutas.rutaVentanaParametrosLeerProductos)
-                            }
-                            .addOnFailureListener {
-                                Toast.makeText(context, "¡Ha ocurrido un error!", Toast.LENGTH_SHORT).show()
-                            }
+
+                        newProductRef?.setValue(producto)?.addOnSuccessListener {
+                            categoriaProducto.value = ""
+                            nombreProducto.value = ""
+                            codigoProducto.value = ""
+                            valorCostoProducto.value = ""
+                            valorVentaProducto.value = ""
+                            Toast.makeText(context,"¡Datos ingresados con éxito!",Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context,"¡Identificacion del producto generado: ${productoId}",Toast.LENGTH_SHORT).show()
+                            navController.navigate(Rutas.rutaVentanaParametrosLeerProductos)
+                        }?.addOnFailureListener {
+                            Toast.makeText(context,"¡Ha ocurrido un error!",Toast.LENGTH_SHORT).show()
+                        }
+
 
                     }else{
                         Toast.makeText(context,"¡Debe rellenar todos los campos!",Toast.LENGTH_SHORT).show()
@@ -158,7 +152,7 @@ fun mostrarVentanaActualizarProducto(navController: NavController, productoId : 
 
 
                 }) {
-                    Text(text = "Actualizar Producto",
+                    Text(text = "Crear Producto",
                         fontWeight = FontWeight.Bold,
                         fontSize = 20.sp
                     )
@@ -167,12 +161,6 @@ fun mostrarVentanaActualizarProducto(navController: NavController, productoId : 
             }
         }
     }
-
-
-
-
-
-
 
 }
 
