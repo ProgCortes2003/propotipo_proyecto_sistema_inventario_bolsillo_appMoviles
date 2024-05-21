@@ -44,7 +44,7 @@ fun mostrarVentanaParametros(navController: NavController){
             shape = CircleShape,
             modifier = Modifier
                 .align(Alignment.Start)
-                .size(100.dp)
+                .size(70.dp)
                 .padding(10.dp)
         ) {
 
@@ -85,7 +85,7 @@ fun mostrarVentanaParametros(navController: NavController){
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            Button(onClick = { },
+            Button(onClick = { navController.navigate(Rutas.rutaVentanaParametrosLeerProveedores)},
                 modifier = Modifier.fillMaxWidth()) {
                 Text(text = "Proveedores",
                     fontSize = 20.sp)

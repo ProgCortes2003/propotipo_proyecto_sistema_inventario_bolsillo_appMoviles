@@ -9,7 +9,10 @@ import com.example.appdebolsillousandojetpackcompose.ventanas_parametros.crud_pr
 import com.example.appdebolsillousandojetpackcompose.ventanas_parametros.crud_productos.mostrarVentanaActualizarProducto
 import com.example.appdebolsillousandojetpackcompose.ventanas_parametros.crud_productos.mostrarVentanaCrearProducto
 import com.example.appdebolsillousandojetpackcompose.ventanas_parametros.crud_productos.mostrarVentanaParametrosLeerProductos
-
+import com.example.appdebolsillousandojetpackcompose.ventanas_parametros.crud_proveedores.mostrarAlertDialogEliminarProveedor
+import com.example.appdebolsillousandojetpackcompose.ventanas_parametros.crud_proveedores.mostrarVentanaActualizarProveedor
+import com.example.appdebolsillousandojetpackcompose.ventanas_parametros.crud_proveedores.mostrarVentanaCrearProveedor
+import com.example.appdebolsillousandojetpackcompose.ventanas_parametros.crud_proveedores.mostrarVentanaParametrosLeerProveedores
 
 
 @Composable
@@ -50,6 +53,24 @@ fun iniciarNavegacion() {
         composable(Rutas.rutaVentanaParametrosEliminarproducto+"/{productoId}"){
             val productoId = it.arguments?.getString("productoId")
             mostrarAlertDialogEliminarProducto(navController, productoId?:"")
+        }
+
+        composable(Rutas.rutaVentanaParametrosLeerProveedores){
+            mostrarVentanaParametrosLeerProveedores(navController)
+        }
+
+        composable(Rutas.rutaVentanaParametrosCrearProveedor){
+            mostrarVentanaCrearProveedor(navController)
+        }
+
+        composable(Rutas.rutaVentanaActualizarProveedor+"/{proveedorId}"){
+            val proveedorId = it.arguments?.getString("proveedorId")
+            mostrarVentanaActualizarProveedor(navController, proveedorId?:"" )
+        }
+
+        composable(Rutas.rutaVentanaParametrosEliminarProveedor+"/{proveedorId}"){
+            val proveedorId = it.arguments?.getString("proveedorId")
+            mostrarAlertDialogEliminarProveedor(navController, proveedorId?:"")
         }
 
 

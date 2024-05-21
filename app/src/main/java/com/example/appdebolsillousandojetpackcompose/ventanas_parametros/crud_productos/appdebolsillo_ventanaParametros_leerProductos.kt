@@ -18,12 +18,10 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -36,8 +34,6 @@ import com.example.appdebolsillousandojetpackcompose.ventanas_parametros.clasesV
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 import com.google.firebase.auth.FirebaseAuth
 
 
@@ -123,7 +119,7 @@ fun mostrarVentanaParametrosLeerProductos(navController: NavController){
                                 ) {
 
                                     Icon(
-                                        painter = painterResource(id = com.example.appdebolsillousandojetpackcompose.R.drawable.svg_icono_editar_listado_producto),
+                                        painter = painterResource(id = com.example.appdebolsillousandojetpackcompose.R.drawable.svg_icono_editar),
                                         contentDescription = "opción editar producto",
                                         tint = Color.White,
                                         modifier = Modifier.padding(10.dp)
@@ -144,7 +140,7 @@ fun mostrarVentanaParametrosLeerProductos(navController: NavController){
                                 ) {
 
                                     Icon(
-                                        painter = painterResource(id = com.example.appdebolsillousandojetpackcompose.R.drawable.svg_icono_eliminar_producto_listado_producto),
+                                        painter = painterResource(id = com.example.appdebolsillousandojetpackcompose.R.drawable.svg_icono_eliminar),
                                         contentDescription = "opción eliminar producto",
                                         tint = Color.White,
                                         modifier = Modifier.padding(10.dp)

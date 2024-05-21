@@ -7,7 +7,10 @@ object Rutas {
     var rutaVentanaRegistro = "ventana_Registro"
     var rutaVentanaParametros = "ventana_Parametros"
 
-    var rutaVentanaParametrosCrearProveedor = "ventana_Parametros_Crear_Productos"
+    var rutaVentanaParametrosLeerProveedores = "ventana_Parametros_Leer_Proveedores"
+    var rutaVentanaParametrosCrearProveedor = "ventana_Parametros_Crear_Proveedor"
+    var rutaVentanaActualizarProveedor = "ventana_Parametros_Actualizar_Proveedor"
+    var rutaVentanaParametrosEliminarProveedor = "ventana_Parametros_Eliminar_Proveedor"
 
     var rutaVentanaParametrosLeerProductos = "ventana_Parametros_Leer_Productos"
     var rutaVentanaParametrosCrearProducto = "ventana_Parametros_Crear_Producto"
