@@ -33,7 +33,7 @@ import com.google.firebase.database.database
 
 @Composable
 fun mostrarVentanaCrearProveedor(navController: NavController){
-    
+
     val nombreProveedor = remember { mutableStateOf("")}
     val codigoProveedor = remember { mutableStateOf("")}
     val numeroTelefonoProveedor = remember { mutableStateOf("") }
@@ -42,35 +42,35 @@ fun mostrarVentanaCrearProveedor(navController: NavController){
     val idUsuario = FirebaseAuth.getInstance().currentUser?.uid
     val referenciaBaseDeDatos = idUsuario?.let { database.getReference("proveedores").child(it) }
     val context = LocalContext.current
-    
+
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        
-        Text(text = "Crear Producto",
+
+        Text(text = "Crear Proveedor",
             fontSize = 28.sp,
             fontWeight = FontWeight.Bold
         )
-        
+
         Spacer(modifier = Modifier.height(50.dp))
-        
+
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(
                     horizontal = 80.dp
                 )
-      
+
         ) {
             Column(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ){
-                
+
                 OutlinedTextField(
-                    value = nombreProveedor.value , 
+                    value = nombreProveedor.value ,
                     onValueChange = {nombreProveedor.value = it} ,
                     label = {
                         Text(text = "Nombre")
@@ -89,20 +89,13 @@ fun mostrarVentanaCrearProveedor(navController: NavController){
                     label = {
                         Text(text = "Número de Telefóno")
                     },
-                    keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Phone
-                    )
                 )
-                
+
                 OutlinedTextField(
-                    value = emailProveedor.value , 
+                    value = emailProveedor.value ,
                     onValueChange = {emailProveedor.value = it},
                     label = {
-                        Text(text = "Email")
-                    },
-                    keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Email
-                    )
+                        Text(text = "Email")}
                 )
 
                 Spacer(modifier = Modifier.height(20.dp))
@@ -113,14 +106,7 @@ fun mostrarVentanaCrearProveedor(navController: NavController){
                         numeroTelefonoProveedor.value.isNotEmpty() &&
                         emailProveedor.value.isNotEmpty()){
 
-                        val emailEsValido = Patterns.EMAIL_ADDRESS.matcher(emailProveedor.toString()).matches()
-                        val telefonoEsValido = numeroTelefonoProveedor.toString().length == 10
 
-                        if(!emailEsValido){
-                            Toast.makeText(context, "¡Ingresa un email válido!",Toast.LENGTH_SHORT).show()
-                        }else if(!telefonoEsValido){
-                            Toast.makeText(context,"¡Ingresa un número de telefóno válido! Longitud = 10 carácteres.",Toast.LENGTH_SHORT).show()
-                        }else{
 
                             val referenciaNuevoProducto = referenciaBaseDeDatos?.push()
                             val proveedorId = referenciaNuevoProducto?.key
@@ -144,7 +130,7 @@ fun mostrarVentanaCrearProveedor(navController: NavController){
                             }?.addOnFailureListener{
                                 Toast.makeText(context,"¡Ha ocurrido un error! Vuelve a intentarlo",Toast.LENGTH_SHORT).show()
                             }
-                        }
+
 
 
                     }else{
@@ -159,12 +145,12 @@ fun mostrarVentanaCrearProveedor(navController: NavController){
                     )
 
                 }
-               
-                
+
+
             }
-            
+
         }
-        
+
     }
-    
+
 }
