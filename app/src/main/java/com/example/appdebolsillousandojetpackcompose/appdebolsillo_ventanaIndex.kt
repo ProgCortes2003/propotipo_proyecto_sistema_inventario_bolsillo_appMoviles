@@ -1,5 +1,6 @@
 package com.example.appdebolsillousandojetpackcompose
 
+import android.app.Activity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -7,34 +8,65 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 
 
 
+
 @Composable
 fun mostrarVentanaIndex(navController: NavController){
+
+    val activity = LocalContext.current as Activity
+    val abrirAlertDialogSalirApp = remember {
+        mutableStateOf(false)
+    }
 
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ){
+        
+        FloatingActionButton(onClick = {
+            abrirAlertDialogSalirApp.value = true
+
+        },
+            modifier = Modifier
+                .size(60.dp)
+                .align(Alignment.End)
+                .padding(10.dp),
+            containerColor = Color.Red) {
+            
+            Icon(painter = painterResource(id = com.example.appdebolsillousandojetpackcompose.R.drawable.svg_salir),
+                contentDescription = "Icono salir",
+                tint = Color.White,
+                modifier = Modifier.padding(10.dp))
+            
+        }
+        
+        Spacer(modifier = Modifier.height(10.dp))
+        
         Text(text = "Hola de nuevo",
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold
@@ -69,7 +101,7 @@ fun mostrarVentanaIndex(navController: NavController){
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Button(onClick = { /*TODO*/ },
-                    modifier=Modifier.size(100.dp),
+                    modifier=Modifier.size(80.dp),
                     shape= CircleShape
                 ) {
 
@@ -92,7 +124,7 @@ fun mostrarVentanaIndex(navController: NavController){
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Button(onClick = { /*TODO*/ },
-                    modifier=Modifier.size(100.dp),
+                    modifier=Modifier.size(80.dp),
                     shape= CircleShape
                 ) {
 
@@ -119,7 +151,7 @@ fun mostrarVentanaIndex(navController: NavController){
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Button(onClick = { /*TODO*/ },
-                    modifier=Modifier.size(100.dp),
+                    modifier=Modifier.size(80.dp),
                     shape= CircleShape
                 ) {
 
@@ -142,7 +174,7 @@ fun mostrarVentanaIndex(navController: NavController){
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Button(onClick = { /*TODO*/ },
-                    modifier=Modifier.size(100.dp),
+                    modifier=Modifier.size(80.dp),
                     shape= CircleShape
                 ) {
 
@@ -170,7 +202,7 @@ fun mostrarVentanaIndex(navController: NavController){
                 Button(onClick = {
                                  navController.navigate(Rutas.rutaVentanaParametros)
                                  },
-                    modifier=Modifier.size(100.dp),
+                    modifier=Modifier.size(80.dp),
                     shape= CircleShape
                 ) {
 
@@ -186,6 +218,28 @@ fun mostrarVentanaIndex(navController: NavController){
                     fontWeight = FontWeight.Bold
                 )
             }
+        }
+
+        if(abrirAlertDialogSalirApp.value){
+            AlertDialog(onDismissRequest = {
+                abrirAlertDialogSalirApp.value = false
+            },
+                title = { Text(text = "¡Alerta saldrás de la aplicación!")},
+                text = { Text(text = "¿Deseas salir de la app?")},
+                confirmButton = {
+                    Button(onClick = {
+                        activity.finishAffinity()
+                    }) {
+                        Text(text = "Salir")
+                    }
+                },
+                dismissButton = {
+                    Button(onClick = {
+                        abrirAlertDialogSalirApp.value = false
+                    }) {
+                        Text(text = "No")
+                    }
+                })
         }
 
     }
