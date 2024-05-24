@@ -10,8 +10,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,12 +26,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.appdebolsillousandojetpackcompose.R
 import com.example.appdebolsillousandojetpackcompose.Rutas
 import com.example.appdebolsillousandojetpackcompose.ventanas_parametros.clasesVentanaParametros.Proveedor
 import com.google.firebase.Firebase
@@ -64,6 +71,23 @@ fun mostrarVentanaActualizarProveedor(navController: NavController, idProveedor:
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ){
+
+        FloatingActionButton(
+            onClick = {navController.navigateUp()},
+            containerColor = MaterialTheme.colorScheme.errorContainer ,
+            contentColor = MaterialTheme.colorScheme.onSurface,
+            shape = CircleShape,
+            modifier = Modifier
+                .align(Alignment.Start)
+                .size(70.dp)
+                .padding(10.dp)
+        ) {
+
+            Icon(painter = painterResource(id = R.drawable.svg_icono_volver),
+                contentDescription = "Icono devolver o retornar a la ventana anterior",
+                modifier = Modifier.padding(10.dp))
+
+        }
 
         Text(text = "Actualizar producto",
             fontSize = 28.sp,
@@ -129,16 +153,6 @@ fun mostrarVentanaActualizarProveedor(navController: NavController, idProveedor:
                         numeroTelefonoProveedor.value.isNotEmpty() &&
                         emailProveedor.value.isNotEmpty()){
 
-                        val emailEsValido = Patterns.EMAIL_ADDRESS.matcher(emailProveedor.toString()).matches()
-                        val telefonoEsValido = numeroTelefonoProveedor.toString().length == 10
-
-                        if(!emailEsValido){
-                            Toast.makeText(context, "¡Ingresa un email válido!", Toast.LENGTH_SHORT).show()
-                        }else if(!telefonoEsValido){
-                            Toast.makeText(context,"¡Ingresa un número de telefóno válido! Longitud = 10 carácteres.",
-                                Toast.LENGTH_SHORT).show()
-                        }else{
-
                             val referenciaNuevoProducto = referenciaAProveedor?.push()
                             val proveedorId = referenciaNuevoProducto?.key
 
@@ -157,11 +171,6 @@ fun mostrarVentanaActualizarProveedor(navController: NavController, idProveedor:
                                 Toast.makeText(context,"¡Ha ocurrido un error!",Toast.LENGTH_SHORT).show()
                             }
                         }
-
-
-                    }else{
-                        Toast.makeText(context,"¡Debe rellenar todos los campos!", Toast.LENGTH_SHORT).show()
-                    }
                 }) {
 
                     Text(

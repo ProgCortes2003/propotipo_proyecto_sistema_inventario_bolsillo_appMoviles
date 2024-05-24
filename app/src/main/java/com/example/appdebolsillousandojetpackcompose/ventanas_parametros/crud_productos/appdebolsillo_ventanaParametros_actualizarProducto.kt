@@ -9,7 +9,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -19,10 +24,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.appdebolsillousandojetpackcompose.R
 import com.example.appdebolsillousandojetpackcompose.Rutas
 import com.google.firebase.Firebase
 import com.google.firebase.database.database
@@ -62,6 +69,22 @@ fun mostrarVentanaActualizarProducto(navController: NavController, productoId : 
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
+        FloatingActionButton(
+            onClick = {navController.navigate(Rutas.rutaVentanaParametrosLeerProductos)},
+            containerColor = MaterialTheme.colorScheme.errorContainer ,
+            contentColor = MaterialTheme.colorScheme.onSurface,
+            shape = CircleShape,
+            modifier = Modifier
+                .align(Alignment.Start)
+                .size(70.dp)
+                .padding(10.dp)
+        ) {
+
+            Icon(painter = painterResource(id = R.drawable.svg_icono_volver),
+                contentDescription = "Icono devolver o retornar a la ventana anterior",
+                modifier = Modifier.padding(10.dp))
+
+        }
 
         Text(
             text = "Actualizar un producto",

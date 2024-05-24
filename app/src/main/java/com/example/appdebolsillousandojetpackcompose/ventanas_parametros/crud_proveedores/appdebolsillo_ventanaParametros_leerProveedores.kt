@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
@@ -19,6 +20,9 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -40,9 +44,11 @@ import com.google.firebase.database.database
 
 @Composable
 fun mostrarVentanaParametrosLeerProveedores(navController: NavController){
-    
-    val registrosProveedores = remember {
-        buscarTodosLosRegistrosDeProveedoresEnBaseDeDatos()
+
+    val registrosProveedores = buscarTodosLosRegistrosDeProveedoresEnBaseDeDatos()
+
+    LaunchedEffect(Unit) {
+        registrosProveedores.value = buscarTodosLosRegistrosDeProveedoresEnBaseDeDatos().value
     }
 
     Column(
@@ -58,7 +64,7 @@ fun mostrarVentanaParametrosLeerProveedores(navController: NavController){
             shape = CircleShape,
             modifier = Modifier
                 .align(Alignment.Start)
-                .size(100.dp)
+                .size(70.dp)
                 .padding(10.dp)
         ) {
 
@@ -73,9 +79,12 @@ fun mostrarVentanaParametrosLeerProveedores(navController: NavController){
             fontWeight = FontWeight.Bold
         )
         
-        LazyColumn {
+        LazyColumn(
+            modifier = Modifier.fillMaxWidth()
+                .weight(1f)
+        ) {
             
-            items(registrosProveedores){
+            items(registrosProveedores.value){
                 
                 registroProveedor -> 
                 
@@ -94,19 +103,19 @@ fun mostrarVentanaParametrosLeerProveedores(navController: NavController){
                         
                         Column {
                             
-                            Text(text = "Nombre del Proveedor: ${registroProveedor.nombreProveedor.uppercase()}")
+                            Text(text = "Nombre del Proveedor: ${registroProveedor?.nombreProveedor.toString()}")
 
                             Spacer(modifier = Modifier.height(10.dp))
 
-                            Text(text = "Código: ${registroProveedor.codigoProveedor.uppercase()}")
+                            Text(text = "Código: ${registroProveedor?.codigoProveedor.toString()}")
 
                             Spacer(modifier = Modifier.height(10.dp))
 
-                            Text(text = "Teléfono: ${registroProveedor.numeroTelefonoProveedor}")
+                            Text(text = "Teléfono: ${registroProveedor?.numeroTelefonoProveedor.toString()}")
 
                             Spacer(modifier = Modifier.height(10.dp))
 
-                            Text(text = "Email: ${registroProveedor.correoElectronicoProveedor.uppercase()}")
+                            Text(text = "Email: ${registroProveedor?.correoElectronicoProveedor.toString()}")
 
                             Spacer(modifier = Modifier.height(10.dp))
 
@@ -122,7 +131,7 @@ fun mostrarVentanaParametrosLeerProveedores(navController: NavController){
                                               navController.navigate(Rutas.rutaVentanaActualizarProveedor+"/${registroProveedor.proveedorId.toString()}")
                                               },
                                     shape = CircleShape,
-                                    containerColor = Color.Blue,
+                                    containerColor = Color.Green,
                                     modifier = Modifier.size(50.dp)
                                 ) {
                                     Icon(
@@ -132,6 +141,8 @@ fun mostrarVentanaParametrosLeerProveedores(navController: NavController){
                                         modifier = Modifier.padding(10.dp)
                                         )
                                 }
+
+                                Spacer(modifier = Modifier.width(20.dp))
 
                                 FloatingActionButton(
                                     onClick = {
@@ -145,7 +156,7 @@ fun mostrarVentanaParametrosLeerProveedores(navController: NavController){
                                         painter = painterResource(id = com.example.appdebolsillousandojetpackcompose.R.drawable.svg_icono_eliminar) ,
                                         contentDescription = "Icono de bote de basura que representa eliminar",
                                         tint = Color.White,
-                                        modifier = Modifier.size(10.dp)
+                                        modifier = Modifier.padding(10.dp)
                                     )
 
                                 }
@@ -183,11 +194,12 @@ fun mostrarVentanaParametrosLeerProveedores(navController: NavController){
     
 }
 
-fun buscarTodosLosRegistrosDeProveedoresEnBaseDeDatos():List<Proveedor> {
+fun buscarTodosLosRegistrosDeProveedoresEnBaseDeDatos(): MutableState<List<Proveedor>> {
+    val proveedoresState = mutableStateOf<List<Proveedor>>(emptyList())
+
     val database = Firebase.database
     val idUsuario = FirebaseAuth.getInstance().currentUser?.uid
     val myRef = idUsuario?.let { database.getReference("proveedores").child(it) }
-
 
     val listaProveedores = mutableListOf<Proveedor>()
 
@@ -195,20 +207,21 @@ fun buscarTodosLosRegistrosDeProveedoresEnBaseDeDatos():List<Proveedor> {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
             for (data in dataSnapshot.children) {
                 val proveedorId = data.key
-                val nombreProveedor = data.child("nombre").getValue(String::class.java) ?: ""
-                val codigoProveedor = data.child("codigo").getValue(String::class.java) ?: ""
-                val numeroTelefonoProveedor = data.child("numeroTelefono").getValue(String::class.java) ?: ""
-                val emailProveedor = data.child("correoElectronico").getValue(String::class.java) ?: ""
-                val proveedor = Proveedor(proveedorId,nombreProveedor,codigoProveedor,numeroTelefonoProveedor,emailProveedor)
+                val nombreProveedor = data.child("nombreProveedor").getValue(String::class.java) ?: ""
+                val codigoProveedor = data.child("codigoProveedor").getValue(String::class.java) ?: ""
+                val numeroTelefonoProveedor = data.child("numeroTelefonoProveedor").getValue(String::class.java) ?: ""
+                val emailProveedor = data.child("correoElectronicoProveedor").getValue(String::class.java) ?: ""
+                val proveedor = Proveedor(proveedorId, nombreProveedor, codigoProveedor, numeroTelefonoProveedor, emailProveedor)
 
                 listaProveedores.add(proveedor)
+                proveedoresState.value = listaProveedores
             }
         }
 
         override fun onCancelled(error: DatabaseError) {
-
+            // Maneja el error aquí
         }
-    }
-    )
-    return listaProveedores
+    })
+
+    return proveedoresState
 }

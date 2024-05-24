@@ -1,5 +1,6 @@
 package com.example.appdebolsillousandojetpackcompose.ventanas_parametros.crud_productos
 
+import android.widget.Scroller
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -12,10 +13,13 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -27,6 +31,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.appdebolsillousandojetpackcompose.R
 import com.example.appdebolsillousandojetpackcompose.Rutas
 import com.google.firebase.Firebase
 import com.google.firebase.database.database
@@ -42,19 +47,39 @@ fun mostrarVentanaParametrosLeerProductos(navController: NavController){
 
     val registros = remember { buscarTodosLosRegistrosEnBaseDeDatos() }
 
-
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            ,
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ){
+
+        FloatingActionButton(
+            onClick = {navController.navigate(Rutas.rutaVentanaParametros)},
+            containerColor = MaterialTheme.colorScheme.errorContainer ,
+            contentColor = MaterialTheme.colorScheme.onSurface,
+            shape = CircleShape,
+            modifier = Modifier
+                .align(Alignment.Start)
+                .size(70.dp)
+                .padding(10.dp)
+        ) {
+
+            Icon(painter = painterResource(id = R.drawable.svg_icono_volver),
+                contentDescription = "Icono devolver o retornar a la ventana anterior",
+                modifier = Modifier.padding(10.dp))
+
+        }
 
         Text(text = "Listado de Productos",
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold
         )
 
-        LazyColumn {
+        LazyColumn(
+            modifier = Modifier.fillMaxWidth().weight(1f)
+        ) {
             items(registros) { registro ->
 
                 Card(
@@ -114,7 +139,7 @@ fun mostrarVentanaParametrosLeerProductos(navController: NavController){
 
                                     },
                                     shape = CircleShape,
-                                    containerColor = Color.Blue,
+                                    containerColor = Color.Green,
                                     modifier = Modifier.size(50.dp)
                                 ) {
 
@@ -191,6 +216,8 @@ fun mostrarVentanaParametrosLeerProductos(navController: NavController){
     }
 
 }
+
+
 
 fun buscarTodosLosRegistrosEnBaseDeDatos():List<Producto> {
     val database = Firebase.database
