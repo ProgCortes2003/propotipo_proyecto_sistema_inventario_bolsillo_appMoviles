@@ -42,12 +42,12 @@ import com.google.firebase.database.database
 fun mostrarVentanaCrearProveedor(navController: NavController){
 
     val nombreProveedor = remember { mutableStateOf("")}
-    val codigoProveedor = remember { mutableStateOf("")}
+    val proveedorNIT = remember { mutableStateOf("")}
     val numeroTelefonoProveedor = remember { mutableStateOf("") }
     val emailProveedor = remember { mutableStateOf("") }
     val database = Firebase.database
     val idUsuario = FirebaseAuth.getInstance().currentUser?.uid
-    val referenciaBaseDeDatos = idUsuario?.let { database.getReference("proveedores").child(it) }
+    val referenciaBaseDeDatos = idUsuario?.let { database.getReference("inventario/proveedores").child(it) }
     val context = LocalContext.current
 
     Column(
@@ -101,10 +101,10 @@ fun mostrarVentanaCrearProveedor(navController: NavController){
                     })
 
                 OutlinedTextField(
-                    value = codigoProveedor.value ,
-                    onValueChange = {codigoProveedor.value = it},
+                    value = proveedorNIT.value ,
+                    onValueChange = {proveedorNIT.value = it},
                     label = {
-                        Text(text = "Código")
+                        Text(text = "NIT proveedor")
                     })
 
                 OutlinedTextField(
@@ -126,7 +126,7 @@ fun mostrarVentanaCrearProveedor(navController: NavController){
 
                 Button(onClick = {
                     if(nombreProveedor.value.isNotEmpty() &&
-                        codigoProveedor.value.isNotEmpty() &&
+                        proveedorNIT.value.isNotEmpty() &&
                         numeroTelefonoProveedor.value.isNotEmpty() &&
                         emailProveedor.value.isNotEmpty()){
 
@@ -138,14 +138,14 @@ fun mostrarVentanaCrearProveedor(navController: NavController){
                             val proveedor = Proveedor(
                                 proveedorId,
                                 nombreProveedor.value,
-                                codigoProveedor.value,
+                                proveedorNIT.value,
                                 numeroTelefonoProveedor.value,
                                 emailProveedor.value
                             )
 
                             referenciaNuevoProducto?.setValue(proveedor)?.addOnSuccessListener {
                                 nombreProveedor.value = ""
-                                codigoProveedor.value = ""
+                                proveedorNIT.value = ""
                                 numeroTelefonoProveedor.value = ""
                                 emailProveedor.value = ""
                                 Toast.makeText(context,"¡Datos ingresados con éxito!",Toast.LENGTH_SHORT).show()

@@ -29,7 +29,7 @@ fun mostrarAlertDialogEliminarProducto(navController: NavController, productoId:
     val valorVentaProducto = remember { mutableStateOf("")}
     val idUsuario = FirebaseAuth.getInstance().currentUser?.uid
     val referenciaProducto = idUsuario?.let {
-        database.getReference("productos").child(it)
+        database.getReference("inventario/productos").child(it)
         .child(productoId)
     }
 

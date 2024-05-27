@@ -43,9 +43,10 @@ fun mostrarVentanaCrearProducto(navController: NavController){
     val codigoProducto = remember { mutableStateOf("")}
     val valorCostoProducto = remember { mutableStateOf("")}
     val valorVentaProducto = remember { mutableStateOf("")}
+    val valorCantidadStock:Int = 0
     val database = Firebase.database
     val idUsuario = FirebaseAuth.getInstance().currentUser?.uid
-    val myRef = idUsuario?.let { database.getReference("productos").child(it) }
+    val myRef = idUsuario?.let { database.getReference("inventario/productos").child(it) }
     val context = LocalContext.current
 
 
@@ -153,7 +154,8 @@ fun mostrarVentanaCrearProducto(navController: NavController){
                             nombreProducto.value,
                             codigoProducto.value,
                             valorCostoProducto.value.toDouble(),
-                            valorVentaProducto.value.toDouble())
+                            valorVentaProducto.value.toDouble(),
+                            valorCantidadStock)
 
 
                         newProductRef?.setValue(producto)?.addOnSuccessListener {

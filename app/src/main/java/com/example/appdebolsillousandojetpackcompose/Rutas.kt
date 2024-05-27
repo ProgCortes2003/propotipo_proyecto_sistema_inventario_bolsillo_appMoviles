@@ -6,6 +6,9 @@ object Rutas {
     var rutaVentanaIndex = "ventana_Index"
     var rutaVentanaRegistro = "ventana_Registro"
     var rutaVentanaParametros = "ventana_Parametros"
+    var rutaventanaMovimientos = "ventana_Movimientos"
+    var rutaVentanaInventario = "ventana_Inventario"
+    var rutaVentanaKardex = "ventana_Kardex"
 
     var rutaVentanaParametrosLeerProveedores = "ventana_Parametros_Leer_Proveedores"
     var rutaVentanaParametrosCrearProveedor = "ventana_Parametros_Crear_Proveedor"

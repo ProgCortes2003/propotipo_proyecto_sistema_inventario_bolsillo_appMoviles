@@ -44,13 +44,13 @@ import com.google.firebase.database.database
 fun mostrarVentanaActualizarProveedor(navController: NavController, idProveedor:String){
 
     val nombreProveedor = remember { mutableStateOf("") }
-    val codigoProveedor = remember { mutableStateOf("") }
+    val proveedorNIT = remember { mutableStateOf("") }
     val numeroTelefonoProveedor = remember { mutableStateOf("") }
     val emailProveedor = remember { mutableStateOf("") }
     val idUsuario = FirebaseAuth.getInstance().currentUser?.uid
     val baseDeDatos = Firebase.database
     val context = LocalContext.current
-    val referenciaAProveedor = idUsuario?.let { baseDeDatos.getReference("proveedores").child(it).child(idProveedor) }
+    val referenciaAProveedor = idUsuario?.let { baseDeDatos.getReference("inventario/proveedores").child(it).child(idProveedor) }
 
     LaunchedEffect(referenciaAProveedor) {
 
@@ -58,7 +58,7 @@ fun mostrarVentanaActualizarProveedor(navController: NavController, idProveedor:
             val proveedor = snapshot.getValue(Proveedor::class.java)
             proveedor?.let {
                 nombreProveedor.value = it.nombreProveedor
-                codigoProveedor.value = it.codigoProveedor
+                proveedorNIT.value = it.proveedorNIT
                 numeroTelefonoProveedor.value = it.numeroTelefonoProveedor
                 emailProveedor.value = it.correoElectronicoProveedor
             }
@@ -89,7 +89,7 @@ fun mostrarVentanaActualizarProveedor(navController: NavController, idProveedor:
 
         }
 
-        Text(text = "Actualizar producto",
+        Text(text = "Actualizar Proveedor",
             fontSize = 28.sp,
             fontWeight = FontWeight.Bold
             )
@@ -117,8 +117,8 @@ fun mostrarVentanaActualizarProveedor(navController: NavController, idProveedor:
                     })
 
                 OutlinedTextField(
-                    value = codigoProveedor.value ,
-                    onValueChange = {codigoProveedor.value = it},
+                    value = proveedorNIT.value ,
+                    onValueChange = {proveedorNIT.value = it},
                     label = {
                         Text(text = "Código")
                     })
@@ -149,7 +149,7 @@ fun mostrarVentanaActualizarProveedor(navController: NavController, idProveedor:
 
                 Button(onClick = {
                     if(nombreProveedor.value.isNotEmpty() &&
-                        codigoProveedor.value.isNotEmpty() &&
+                        proveedorNIT.value.isNotEmpty() &&
                         numeroTelefonoProveedor.value.isNotEmpty() &&
                         emailProveedor.value.isNotEmpty()){
 
@@ -159,7 +159,7 @@ fun mostrarVentanaActualizarProveedor(navController: NavController, idProveedor:
                             val proveedor = Proveedor(
                                 proveedorId,
                                 nombreProveedor.value,
-                                codigoProveedor.value,
+                                proveedorNIT.value,
                                 numeroTelefonoProveedor.value,
                                 emailProveedor.value
                             )

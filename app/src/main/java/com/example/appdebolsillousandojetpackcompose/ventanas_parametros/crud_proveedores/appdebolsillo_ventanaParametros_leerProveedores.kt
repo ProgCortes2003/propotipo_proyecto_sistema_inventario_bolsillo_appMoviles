@@ -107,7 +107,7 @@ fun mostrarVentanaParametrosLeerProveedores(navController: NavController){
 
                             Spacer(modifier = Modifier.height(10.dp))
 
-                            Text(text = "Código: ${registroProveedor?.codigoProveedor.toString()}")
+                            Text(text = "Código: ${registroProveedor?.proveedorNIT.toString()}")
 
                             Spacer(modifier = Modifier.height(10.dp))
 
@@ -199,7 +199,7 @@ fun buscarTodosLosRegistrosDeProveedoresEnBaseDeDatos(): MutableState<List<Prove
 
     val database = Firebase.database
     val idUsuario = FirebaseAuth.getInstance().currentUser?.uid
-    val myRef = idUsuario?.let { database.getReference("proveedores").child(it) }
+    val myRef = idUsuario?.let { database.getReference("inventario/proveedores").child(it) }
 
     val listaProveedores = mutableListOf<Proveedor>()
 
@@ -208,10 +208,10 @@ fun buscarTodosLosRegistrosDeProveedoresEnBaseDeDatos(): MutableState<List<Prove
             for (data in dataSnapshot.children) {
                 val proveedorId = data.key
                 val nombreProveedor = data.child("nombreProveedor").getValue(String::class.java) ?: ""
-                val codigoProveedor = data.child("codigoProveedor").getValue(String::class.java) ?: ""
+                val proveedorNIT = data.child("proveedorNIT").getValue(String::class.java) ?: ""
                 val numeroTelefonoProveedor = data.child("numeroTelefonoProveedor").getValue(String::class.java) ?: ""
                 val emailProveedor = data.child("correoElectronicoProveedor").getValue(String::class.java) ?: ""
-                val proveedor = Proveedor(proveedorId, nombreProveedor, codigoProveedor, numeroTelefonoProveedor, emailProveedor)
+                val proveedor = Proveedor(proveedorId, nombreProveedor, proveedorNIT, numeroTelefonoProveedor, emailProveedor)
 
                 listaProveedores.add(proveedor)
                 proveedoresState.value = listaProveedores

@@ -8,6 +8,7 @@ class Producto() {
     var codigo: String = ""
     var valorCosto: Double = 0.0
     var valorVenta: Double = 0.0
+    var cantidadStock: Int = 0
 
     constructor(
         productoId: String?,
@@ -15,7 +16,8 @@ class Producto() {
         nombre: String,
         codigo: String,
         valorCosto: Double,
-        valorVenta: Double
+        valorVenta: Double,
+        cantidadStock: Int
     ) : this() {
         this.productoId = productoId
         this.categoria = categoria
@@ -23,6 +25,7 @@ class Producto() {
         this.codigo = codigo
         this.valorCosto = valorCosto
         this.valorVenta = valorVenta
+        this.cantidadStock = cantidadStock
     }
 }
 

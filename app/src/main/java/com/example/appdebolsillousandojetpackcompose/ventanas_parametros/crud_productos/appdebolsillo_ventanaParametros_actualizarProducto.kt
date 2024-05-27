@@ -44,11 +44,14 @@ fun mostrarVentanaActualizarProducto(navController: NavController, productoId : 
     val codigoProducto = remember { mutableStateOf("")}
     val valorCostoProducto = remember { mutableStateOf("")}
     val valorVentaProducto = remember { mutableStateOf("")}
+    val cantidadStockProducto = remember {
+        mutableStateOf("")
+    }
     val idUsuario = FirebaseAuth.getInstance().currentUser?.uid
     val database = Firebase.database
     val context = LocalContext.current
 
-    val productoReferencia = idUsuario?.let { database.getReference("productos").child(it).child(productoId) }
+    val productoReferencia = idUsuario?.let { database.getReference("inventario/productos").child(it).child(productoId) }
 
 
         LaunchedEffect(productoReferencia) {
@@ -60,6 +63,8 @@ fun mostrarVentanaActualizarProducto(navController: NavController, productoId : 
                     codigoProducto.value = it.codigo
                     valorCostoProducto.value = it.valorCosto.toString()
                     valorVentaProducto.value = it.valorVenta.toString()
+                    cantidadStockProducto.value = it.cantidadStock.toString()
+
                 }
             }
         }
@@ -163,7 +168,8 @@ fun mostrarVentanaActualizarProducto(navController: NavController, productoId : 
                             nombreProducto.value,
                             codigoProducto.value,
                             valorCostoProducto.value.toDouble(),
-                            valorVentaProducto.value.toDouble()
+                            valorVentaProducto.value.toDouble(),
+                            cantidadStockProducto.value.toInt()
                         )
 
                         productoReferencia?.setValue(producto)

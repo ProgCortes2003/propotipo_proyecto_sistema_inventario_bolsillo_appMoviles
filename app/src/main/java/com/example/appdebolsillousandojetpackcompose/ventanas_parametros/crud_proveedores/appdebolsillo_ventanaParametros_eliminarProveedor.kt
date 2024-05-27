@@ -28,7 +28,7 @@ fun mostrarAlertDialogEliminarProveedor(navController: NavController, idProveedo
     val emailProveedor = remember { mutableStateOf("") }
     val idUsuario = FirebaseAuth.getInstance().currentUser?.uid
     val baseDeDatos = Firebase.database
-    val referenciaAProveedor = idUsuario?.let { baseDeDatos.getReference("proveedores").child(it).child(idProveedor) }
+    val referenciaAProveedor = idUsuario?.let { baseDeDatos.getReference("inventario/proveedores").child(it).child(idProveedor) }
 
     LaunchedEffect(referenciaAProveedor) {
 
@@ -36,7 +36,7 @@ fun mostrarAlertDialogEliminarProveedor(navController: NavController, idProveedo
             val proveedor = snapshot.getValue(Proveedor::class.java)
             proveedor?.let {
                 nombreProveedor.value = it.nombreProveedor
-                codigoProveedor.value = it.codigoProveedor
+                codigoProveedor.value = it.proveedorNIT
                 numeroTelefonoProveedor.value = it.numeroTelefonoProveedor
                 emailProveedor.value = it.correoElectronicoProveedor
             }

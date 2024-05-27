@@ -222,7 +222,7 @@ fun mostrarVentanaParametrosLeerProductos(navController: NavController){
 fun buscarTodosLosRegistrosEnBaseDeDatos():List<Producto> {
     val database = Firebase.database
     val idUsuario = FirebaseAuth.getInstance().currentUser?.uid
-    val myRef = idUsuario?.let { database.getReference("productos").child(it) }
+    val myRef = idUsuario?.let { database.getReference("inventario/productos").child(it) }
 
 
     val listaProductos = mutableListOf<Producto>()
@@ -235,8 +235,10 @@ fun buscarTodosLosRegistrosEnBaseDeDatos():List<Producto> {
                 val codigo = data.child("codigo").getValue(String::class.java) ?: ""
                 val valorCosto = data.child("valorCosto").getValue(Double::class.java) ?: 0.0
                 val valorVenta = data.child("valorVenta").getValue(Double::class.java) ?: 0.0
+                val cantidadStock = data.child("cantidadStock").getValue(Int::class.java) ?: 0
                 val productoId = data.key
-                val producto = Producto(productoId,categoria, nombre, codigo, valorCosto, valorVenta)
+                val producto = Producto(productoId, categoria,nombre, codigo, valorCosto, valorVenta, cantidadStock)
+
 
                 listaProductos.add(producto)
             }

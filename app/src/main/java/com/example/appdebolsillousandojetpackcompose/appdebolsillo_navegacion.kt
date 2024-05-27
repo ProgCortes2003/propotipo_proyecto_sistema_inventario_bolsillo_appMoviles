@@ -35,6 +35,15 @@ fun iniciarNavegacion() {
         composable(Rutas.rutaVentanaRegistro){
             mostrarVentanaRegistro(navController, viewModel)
         }
+        composable(Rutas.rutaventanaMovimientos){
+            mostrarVentanaMovimientos(navController)
+        }
+        composable(Rutas.rutaVentanaInventario){
+            mostrarVentanaInventario(navController)
+        }
+        composable(Rutas.rutaVentanaKardex){
+            mostrarVentanaKardex(navController)
+        }
         composable(Rutas.rutaVentanaParametros){
             mostrarVentanaParametros(navController)
         }

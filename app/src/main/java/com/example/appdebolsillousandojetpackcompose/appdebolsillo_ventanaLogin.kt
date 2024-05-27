@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -175,14 +176,21 @@ fun mostrarVentanaLogin(navController: NavController,
         *   Acción a ejecutar.
         * })*/
 
-        Spacer(modifier = Modifier.height(20.dp))
+        Spacer(modifier = Modifier.height(10.dp))
 
-        Image(painter = painterResource(id = R.drawable.imagen_logo_google_ventana_login) ,
-            contentDescription = "Logo de Google",
+        Image(painter = painterResource(id = R.drawable.imagen_logo_unisimon) ,
+            contentDescription = "Logo Unisimón",
             modifier = Modifier
-                .size(60.dp)
+                .fillMaxWidth()
+                .padding(20.dp)
                 .clickable {
 
                 })
+
+        Text(text = "¡DeBolsillo app es un producto orgullosamente unisimón!",
+            fontSize = 18.sp,
+            fontStyle = FontStyle.Italic,
+            fontWeight = FontWeight.Light)
+
     }
 }

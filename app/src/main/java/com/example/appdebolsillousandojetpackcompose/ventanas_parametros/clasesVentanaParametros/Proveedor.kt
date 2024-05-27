@@ -3,20 +3,20 @@ package com.example.appdebolsillousandojetpackcompose.ventanas_parametros.clases
 class Proveedor {
     var proveedorId:String? = null
     var nombreProveedor:String = ""
-    var codigoProveedor:String = ""
+    var proveedorNIT:String = ""
     var numeroTelefonoProveedor:String = ""
     var correoElectronicoProveedor:String = ""
 
     constructor(
         proveedorId: String?,
         nombreProveedor: String,
-        codigoProveedor: String,
+        proveedorNIT: String,
         numeroTelefonoProveedor: String,
         correoElectronicoProveedor:String
     ):this(){
         this.proveedorId = proveedorId
         this.nombreProveedor = nombreProveedor
-        this.codigoProveedor = codigoProveedor
+        this.proveedorNIT = proveedorNIT
         this.numeroTelefonoProveedor = numeroTelefonoProveedor
         this.correoElectronicoProveedor = correoElectronicoProveedor
     }

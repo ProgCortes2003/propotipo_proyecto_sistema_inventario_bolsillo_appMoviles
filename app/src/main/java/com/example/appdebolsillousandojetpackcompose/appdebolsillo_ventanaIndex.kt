@@ -95,53 +95,6 @@ fun mostrarVentanaIndex(navController: NavController){
 
         Spacer(modifier = Modifier.height(20.dp))
 
-        Row {
-
-            Column (
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Button(onClick = { /*TODO*/ },
-                    modifier=Modifier.size(80.dp),
-                    shape= CircleShape
-                ) {
-
-                    Icon(painter = painterResource(id = R.drawable.svg_entrada),
-                        contentDescription = "icono para ventana entrada",
-                        tint = Color.White
-                    )
-                }
-                Spacer(modifier = Modifier.height(10.dp))
-
-                Text(text = "Entrada",
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold
-                )
-            }
-
-            Spacer(modifier = Modifier.width(50.dp))
-
-            Column (
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Button(onClick = { /*TODO*/ },
-                    modifier=Modifier.size(80.dp),
-                    shape= CircleShape
-                ) {
-
-                    Icon(painter = painterResource(id = R.drawable.svg_salida),
-                        contentDescription = "icono para ventana entrada",
-                        tint = Color.White
-                    )
-                }
-                Spacer(modifier = Modifier.height(10.dp))
-
-                Text(text = "Salida",
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold
-                )
-            }
-
-        }
 
         Spacer(modifier = Modifier.height(10.dp))
 
@@ -150,13 +103,32 @@ fun mostrarVentanaIndex(navController: NavController){
             Column (
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Button(onClick = { /*TODO*/ },
+                Button(onClick = { navController.navigate(Rutas.rutaventanaMovimientos) },
+                    modifier=Modifier.size(80.dp),
+                    shape= CircleShape
+                ) {
+
+                    Icon(painter = painterResource(id = R.drawable.svg_icono_movimiento),
+                        contentDescription = "Icono movimientos",
+                        tint = Color.White
+                    )
+                }
+                Spacer(modifier = Modifier.height(10.dp))
+
+                Text(text = "Movimientos",
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold
+                )
+
+                Spacer(modifier = Modifier.height(30.dp))
+
+                Button(onClick = { navController.navigate(Rutas.rutaVentanaInventario) },
                     modifier=Modifier.size(80.dp),
                     shape= CircleShape
                 ) {
 
                     Icon(painter = painterResource(id = R.drawable.svg_inventario),
-                        contentDescription = "icono para ventana entrada",
+                        contentDescription = "Icono Inventario",
                         tint = Color.White
                     )
                 }
@@ -173,13 +145,13 @@ fun mostrarVentanaIndex(navController: NavController){
             Column (
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Button(onClick = { /*TODO*/ },
+                Button(onClick = { navController.navigate(Rutas.rutaVentanaKardex) },
                     modifier=Modifier.size(80.dp),
                     shape= CircleShape
                 ) {
 
                     Icon(painter = painterResource(id = R.drawable.svg_kardex),
-                        contentDescription = "icono para ventana entrada",
+                        contentDescription = "icono para KARDEX",
                         tint = Color.White
                     )
                 }
@@ -189,25 +161,18 @@ fun mostrarVentanaIndex(navController: NavController){
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold
                 )
-            }
 
-        }
+                Spacer(modifier = Modifier.height(30.dp))
 
-        Spacer(modifier = Modifier.height(10.dp))
-
-        Row {
-            Column (
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
                 Button(onClick = {
-                                 navController.navigate(Rutas.rutaVentanaParametros)
-                                 },
+                    navController.navigate(Rutas.rutaVentanaParametros)
+                },
                     modifier=Modifier.size(80.dp),
                     shape= CircleShape
                 ) {
 
                     Icon(painter = painterResource(id = R.drawable.svg_parametros),
-                        contentDescription = "icono para ventana entrada",
+                        contentDescription = "Icono Parámetros",
                         tint = Color.White
                     )
                 }
@@ -217,8 +182,12 @@ fun mostrarVentanaIndex(navController: NavController){
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold
                 )
+
             }
+
         }
+
+
 
         if(abrirAlertDialogSalirApp.value){
             AlertDialog(onDismissRequest = {
