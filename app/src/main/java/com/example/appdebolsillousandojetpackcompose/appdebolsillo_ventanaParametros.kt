@@ -93,9 +93,9 @@ fun mostrarVentanaParametros(navController: NavController){
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            Button(onClick = { },
+            Button(onClick = { navController.navigate(Rutas.rutaVentanaParametrosLeerCliente)},
                 modifier = Modifier.fillMaxWidth()) {
-                Text(text = "PQRS",
+                Text(text = "Clientes",
                     fontSize = 20.sp)
             }
 

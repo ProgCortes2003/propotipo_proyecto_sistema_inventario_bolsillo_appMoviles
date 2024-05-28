@@ -19,4 +19,10 @@ object Rutas {
     var rutaVentanaParametrosCrearProducto = "ventana_Parametros_Crear_Producto"
     var rutaVentanaParametrosActualizarProducto = "ventana_Parametros_Actualizar_Producto"
     var rutaVentanaParametrosEliminarproducto = "ventana_Parametros_Eliminar_Producto"
+
+    var rutaVentanaParametrosLeerCliente = "ventana_Parametros_Leer_Cliente"
+    var rutaVentanaParametrosCrearCliente = "ventana_Parametros_Crear_Cliente"
+    var rutaVentanaParametrosActualizarCliente = "ventana_Parametros_Actualizar_Cliente"
+    var rutaVentanaParametrosEliminarCliente = "ventana_Parametros_Eliminar_Cliente"
+
 }

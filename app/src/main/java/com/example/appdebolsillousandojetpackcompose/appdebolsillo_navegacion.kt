@@ -5,6 +5,10 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.appdebolsillousandojetpackcompose.ventanas_parametros.crud_clientes.mostrarAlertDialogEliminarCliente
+import com.example.appdebolsillousandojetpackcompose.ventanas_parametros.crud_clientes.mostrarVentanaActualizarCliente
+import com.example.appdebolsillousandojetpackcompose.ventanas_parametros.crud_clientes.mostrarVentanaCrearCliente
+import com.example.appdebolsillousandojetpackcompose.ventanas_parametros.crud_clientes.mostrarVentanaParametrosLeerClientes
 import com.example.appdebolsillousandojetpackcompose.ventanas_parametros.crud_productos.mostrarAlertDialogEliminarProducto
 import com.example.appdebolsillousandojetpackcompose.ventanas_parametros.crud_productos.mostrarVentanaActualizarProducto
 import com.example.appdebolsillousandojetpackcompose.ventanas_parametros.crud_productos.mostrarVentanaCrearProducto
@@ -81,6 +85,25 @@ fun iniciarNavegacion() {
             val proveedorId = it.arguments?.getString("proveedorId")
             mostrarAlertDialogEliminarProveedor(navController, proveedorId?:"")
         }
+
+        composable(Rutas.rutaVentanaParametrosLeerCliente){
+            mostrarVentanaParametrosLeerClientes(navController)
+        }
+
+        composable(Rutas.rutaVentanaParametrosCrearCliente){
+            mostrarVentanaCrearCliente(navController)
+        }
+
+        composable(Rutas.rutaVentanaParametrosActualizarCliente+"/{clienteId}"){
+            val clienteId = it.arguments?.getString("clienteId")
+            mostrarVentanaActualizarCliente(navController, clienteId?:"" )
+        }
+
+        composable(Rutas.rutaVentanaParametrosEliminarCliente+"/{clienteId}"){
+            val clienteId = it.arguments?.getString("clienteId")
+            mostrarAlertDialogEliminarCliente(navController, clienteId?:"")
+        }
+
 
 
 
