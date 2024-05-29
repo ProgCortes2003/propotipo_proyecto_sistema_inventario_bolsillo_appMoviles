@@ -186,11 +186,7 @@ fun mostrarVentanaLogin(navController: NavController,
                 .clickable {
 
                 })
-
-        Text(text = "¡DeBolsillo app es un producto orgullosamente unisimón!",
-            fontSize = 18.sp,
-            fontStyle = FontStyle.Italic,
-            fontWeight = FontWeight.Light)
+        
 
     }
 }

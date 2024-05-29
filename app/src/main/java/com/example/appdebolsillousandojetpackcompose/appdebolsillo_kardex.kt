@@ -17,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -55,9 +56,16 @@ fun mostrarVentanaKardex(navController: NavController){
 
         Spacer(modifier = Modifier.height(30.dp))
 
-        Text(text = "¡Ventana en construcción!",
+        Text(text = "¡Función en construcción!",
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold)
+
+        Spacer(modifier = Modifier.height(10.dp))
+
+        Text(text = "Se habilitará en la versión 1.0",
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Light,
+            fontStyle = FontStyle.Italic)
 
 
 

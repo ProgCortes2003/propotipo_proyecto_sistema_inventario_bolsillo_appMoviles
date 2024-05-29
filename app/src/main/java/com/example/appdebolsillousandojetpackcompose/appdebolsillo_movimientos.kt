@@ -1,9 +1,12 @@
 package com.example.appdebolsillousandojetpackcompose
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -25,6 +28,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -58,9 +62,22 @@ fun mostrarVentanaMovimientos(navController: NavController){
 
         }
 
-        Text(text = "Movimientos",
+        Image(painter = painterResource(id = R.drawable.svg_construccion),
+            contentDescription = "Icono de construcción",
+            modifier = Modifier.size(100.dp))
+
+        Spacer(modifier = Modifier.height(30.dp))
+
+        Text(text = "¡Función en construcción!",
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold)
+
+        Spacer(modifier = Modifier.height(10.dp))
+
+        Text(text = "Se habilitará en la versión 1.0",
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Light,
+            fontStyle = FontStyle.Italic)
         
 
     }
